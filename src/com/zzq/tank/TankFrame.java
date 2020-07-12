@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
 
-    Tank myTank=new Tank(200,200,Dir.DOWN);
+    Tank myTank=new Tank(200,200,Dir.DOWN,false);
 
     public TankFrame() {
         this.setResizable(true);
@@ -28,7 +28,6 @@ public class TankFrame extends Frame {
     public void paint(Graphics g) {
         myTank.paint(g);
 
-
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -37,7 +36,12 @@ public class TankFrame extends Frame {
         boolean bU = false;
         boolean bD = false;
 
-        public void setTankDir() {
+        public void setMainTankDir() {
+//            if(!bL&!bU&!bR&!bD){
+//                myTank.setMoving(false);
+//            }else{
+//                myTank.setMoving(true);
+//            }
             if (bL) myTank.setDir(Dir.LEFT);
             if (bR) myTank.setDir(Dir.RIGHT);;
             if (bD) myTank.setDir(Dir.DOWN);;
@@ -46,6 +50,7 @@ public class TankFrame extends Frame {
 
         @Override
         public void keyPressed(KeyEvent e) {
+            myTank.setMoving(true);
             int keyCode = e.getKeyCode();
             switch (keyCode) {
                 case KeyEvent.VK_LEFT:
@@ -63,11 +68,12 @@ public class TankFrame extends Frame {
                 default:
                     break;
             }
-            setTankDir();
+            setMainTankDir();
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
+            myTank.setMoving(false);
             int keyCode = e.getKeyCode();
             switch (keyCode) {
                 case KeyEvent.VK_LEFT:
@@ -85,7 +91,7 @@ public class TankFrame extends Frame {
                 default:
                     break;
             }
-            setTankDir();
+            setMainTankDir();
         }
 
     }
