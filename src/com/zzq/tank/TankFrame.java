@@ -7,7 +7,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
-    int x = 100, y = 100;
+
+    Tank myTank=new Tank(200,200,Dir.DOWN);
 
     public TankFrame() {
         this.setResizable(true);
@@ -18,7 +19,6 @@ public class TankFrame extends Frame {
             @Override
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
-//                Runtime.getRuntime().exit(0);
             }
         });
         this.addKeyListener(new MyKeyListener());
@@ -26,11 +26,8 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        System.out.println("paint");
-        g.fillRect(x, y, 50, 50);
-//        x+=10;
-//        y+=10;
-//        repaint();
+        myTank.paint(g);
+
 
     }
 
@@ -40,32 +37,13 @@ public class TankFrame extends Frame {
         boolean bU = false;
         boolean bD = false;
 
-        public void move(boolean bU,boolean bD,boolean bR,boolean bL){
-            System.out.println("move开始......");
-            if(bL&bU){
-                x-=10;
-                y+=-10;
-            }else if(bL&bD){
-                x-=10;
-                y+=10;
-            }else if(bR&bU){
-                x+=10;
-                y+=-10;
-            }else if(bR&bD){
-                x+=10;
-                y+=10;
-            }else if(bR){
-                x+=10;
-            }else if(bD){
-                y+=10;
-            }else if(bU){
-                y-=10;
-            }else{
-                x-=10;
-            }
-            System.out.println("move结束......");
-
+        public void setTankDir() {
+            if (bL) myTank.setDir(Dir.LEFT);
+            if (bR) myTank.setDir(Dir.RIGHT);;
+            if (bD) myTank.setDir(Dir.DOWN);;
+            if (bU) myTank.setDir(Dir.UP);;
         }
+
         @Override
         public void keyPressed(KeyEvent e) {
             int keyCode = e.getKeyCode();
@@ -80,12 +58,12 @@ public class TankFrame extends Frame {
                     bU = true;
                     break;
                 case KeyEvent.VK_DOWN:
-                    bD= true;
+                    bD = true;
                     break;
                 default:
                     break;
             }
-            move(bU,bD,bR,bL);
+            setTankDir();
         }
 
         @Override
@@ -102,12 +80,13 @@ public class TankFrame extends Frame {
                     bU = false;
                     break;
                 case KeyEvent.VK_DOWN:
-                    bD= false;
+                    bD = false;
                     break;
                 default:
                     break;
             }
-            move(bU,bD,bR,bL);
+            setTankDir();
         }
+
     }
 }
