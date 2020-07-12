@@ -40,6 +40,32 @@ public class TankFrame extends Frame {
         boolean bU = false;
         boolean bD = false;
 
+        public void move(boolean bU,boolean bD,boolean bR,boolean bL){
+            System.out.println("move开始......");
+            if(bL&bU){
+                x-=10;
+                y+=-10;
+            }else if(bL&bD){
+                x-=10;
+                y+=10;
+            }else if(bR&bU){
+                x+=10;
+                y+=-10;
+            }else if(bR&bD){
+                x+=10;
+                y+=10;
+            }else if(bR){
+                x+=10;
+            }else if(bD){
+                y+=10;
+            }else if(bU){
+                y-=10;
+            }else{
+                x-=10;
+            }
+            System.out.println("move结束......");
+
+        }
         @Override
         public void keyPressed(KeyEvent e) {
             int keyCode = e.getKeyCode();
@@ -59,6 +85,7 @@ public class TankFrame extends Frame {
                 default:
                     break;
             }
+            move(bU,bD,bR,bL);
         }
 
         @Override
@@ -80,6 +107,7 @@ public class TankFrame extends Frame {
                 default:
                     break;
             }
+            move(bU,bD,bR,bL);
         }
     }
 }
