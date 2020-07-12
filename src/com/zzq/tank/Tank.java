@@ -2,6 +2,9 @@ package com.zzq.tank;
 
 import java.awt.*;
 
+/**
+ * 坦克
+ */
 public class Tank {
     private int x;
     private int y;
