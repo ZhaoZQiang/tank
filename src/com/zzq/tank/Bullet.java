@@ -61,6 +61,10 @@ public class Bullet {
         this.tf = tf;
     }
 
+    /**
+     * 画出子弹
+     * @param g
+     */
     public void paint(Graphics g){
         Color c = g.getColor();
         g.setColor(Color.RED);
@@ -68,6 +72,10 @@ public class Bullet {
         g.setColor(c);
         this.move();
     }
+
+    /**
+     * 设置子弹移动
+     */
     private void  move(){
         switch (dir) {
             case UP:

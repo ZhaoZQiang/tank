@@ -51,6 +51,14 @@ public class TankFrame extends Frame {
         g.drawImage(offScreenImage, 0, 0, null);
     }
 
+    /**
+     *
+     * @Description 调用画笔
+     * @author zhaoziqiang
+     * @date 2020/7/13 18:28
+     * @param g
+     * @return void
+     */
     @Override
     public void paint(Graphics g) {
         Color color = g.getColor();
@@ -76,6 +84,14 @@ public class TankFrame extends Frame {
         boolean bU = false;
         boolean bD = false;
 
+        /**
+         *
+         * @Description  设置坦克运动方向
+         * @author zhaoziqiang
+         * @date 2020/7/13 18:28
+         * @param
+         * @return void
+         */
         public void setMainTankDir() {
             if (!bL & !bU & !bR & !bD) {
                 myTank.setMoving(false);
@@ -92,6 +108,14 @@ public class TankFrame extends Frame {
             }
         }
 
+        /**
+         *
+         * @Description 按下按键
+         * @author zhaoziqiang
+         * @date 2020/7/13 18:29
+         * @param e
+         * @return void
+         */
         @Override
         public void keyPressed(KeyEvent e) {
             int keyCode = e.getKeyCode();
@@ -114,6 +138,14 @@ public class TankFrame extends Frame {
             setMainTankDir();
         }
 
+        /**
+         *
+         * @Description 释放按键
+         * @author zhaoziqiang
+         * @date 2020/7/13 18:29
+         * @param e
+         * @return void
+         */
         @Override
         public void keyReleased(KeyEvent e) {
             int keyCode = e.getKeyCode();

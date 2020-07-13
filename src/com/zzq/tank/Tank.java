@@ -70,6 +70,10 @@ public class Tank {
         this.move();
 
     }
+
+    /**
+     * 设置坦克移动方向
+     */
     private void  move(){
         if(!moving) return;
         switch (dir) {
@@ -90,6 +94,9 @@ public class Tank {
         }
     }
 
+    /**
+     * 射击
+     */
     public void fire(){
        tf.bullets.add(new Bullet(x+TANK_WIDTH/2,y+TANK_HEIGHT/2,dir,true,tf));
     }
