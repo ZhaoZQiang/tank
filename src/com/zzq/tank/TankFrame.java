@@ -5,11 +5,17 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 public class TankFrame extends Frame {
-    private static final int GAME_WIDTH=800,GAME_HEIGHT=800;
-    Tank myTank=new Tank(200,200,Dir.DOWN,false,this);
-    Bullet bullet=null;
+    static final int GAME_WIDTH = 800, GAME_HEIGHT = 800;
+    Tank myTank = new Tank(200, 200, Dir.DOWN, false, this);
+    List<Bullet> bullets = new ArrayList<Bullet>();
+    Bullet bullet = null;
+
     public TankFrame() {
         this.setResizable(true);
         this.setTitle("tank war");
@@ -26,28 +32,42 @@ public class TankFrame extends Frame {
 
     /**
      * 消除闪烁
+     *
      * @param g
      */
-    Image offScreenImage=null;
+    Image offScreenImage = null;
+
     @Override
     public void update(Graphics g) {
-        if(offScreenImage==null){
-            offScreenImage=this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
         }
         Graphics goffScreen = offScreenImage.getGraphics();
         Color c = goffScreen.getColor();
         goffScreen.setColor(Color.BLACK);
-        goffScreen.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        goffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         goffScreen.setColor(c);
         paint(goffScreen);
-        g.drawImage(offScreenImage,0,0,null);
+        g.drawImage(offScreenImage, 0, 0, null);
     }
 
     @Override
     public void paint(Graphics g) {
+        Color color = g.getColor();
+        g.setColor(Color.green);
+        g.drawString("子弹数量："+bullets.size(),100,100);
+        g.setColor(color);
+
         myTank.paint(g);
-        if(bullet!=null)
-        bullet.paint(g);
+        Iterator<Bullet> iterator = bullets.iterator();
+        while (iterator.hasNext()){
+            Bullet next = iterator.next();
+            if (!next.isLive()) {
+                iterator.remove();
+            } else {
+                next.paint(g);
+            }
+        }
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -57,14 +77,18 @@ public class TankFrame extends Frame {
         boolean bD = false;
 
         public void setMainTankDir() {
-            if(!bL&!bU&!bR&!bD){
+            if (!bL & !bU & !bR & !bD) {
                 myTank.setMoving(false);
-            }else{
+            } else {
                 myTank.setMoving(true);
-                if (bL) myTank.setDir(Dir.LEFT);
-                if (bR) myTank.setDir(Dir.RIGHT);
-                if (bD) myTank.setDir(Dir.DOWN);
-                if (bU) myTank.setDir(Dir.UP);
+                if (bL)
+                    myTank.setDir(Dir.LEFT);
+                if (bR)
+                    myTank.setDir(Dir.RIGHT);
+                if (bD)
+                    myTank.setDir(Dir.DOWN);
+                if (bU)
+                    myTank.setDir(Dir.UP);
             }
         }
 

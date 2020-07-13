@@ -10,11 +10,55 @@ public class Bullet {
     private static final   int WIDTH=10,HEIGHT=10;
     private int x,y;
     private Dir dir;
+    private boolean isLive=true;
+    private TankFrame tf;
 
-    public Bullet(int x, int y, Dir dir) {
+    public Bullet(int x, int y, Dir dir, boolean isLive, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.isLive = isLive;
+        this.tf = tf;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public Dir getDir() {
+        return dir;
+    }
+
+    public void setDir(Dir dir) {
+        this.dir = dir;
+    }
+
+    public boolean isLive() {
+        return isLive;
+    }
+
+    public void setLive(boolean live) {
+        isLive = live;
+    }
+
+    public TankFrame getTf() {
+        return tf;
+    }
+
+    public void setTf(TankFrame tf) {
+        this.tf = tf;
     }
 
     public void paint(Graphics g){
@@ -23,7 +67,6 @@ public class Bullet {
         g.fillOval(x, y, WIDTH, HEIGHT);
         g.setColor(c);
         this.move();
-
     }
     private void  move(){
         switch (dir) {
@@ -42,5 +85,9 @@ public class Bullet {
             default:
                 break;
         }
+        if(x<0||y<0||x>TankFrame.GAME_WIDTH||y>TankFrame.GAME_HEIGHT){
+            isLive=false;
+        }
+
     }
 }

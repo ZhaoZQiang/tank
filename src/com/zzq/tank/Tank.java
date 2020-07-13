@@ -91,7 +91,7 @@ public class Tank {
     }
 
     public void fire(){
-       tf.bullet=new Bullet(x+TANK_WIDTH/2,y+TANK_HEIGHT/2,dir);
+       tf.bullets.add(new Bullet(x+TANK_WIDTH/2,y+TANK_HEIGHT/2,dir,true,tf));
     }
 
 }
