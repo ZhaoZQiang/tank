@@ -7,13 +7,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
-
+    private static final int GAME_WIDTH=800,GAME_HEIGHT=800;
     Tank myTank=new Tank(200,200,Dir.DOWN,false);
     Bullet bullet=new Bullet(300,300,Dir.DOWN);
     public TankFrame() {
         this.setResizable(true);
         this.setTitle("tank war");
-        this.setSize(800, 800);
+        this.setSize(GAME_WIDTH, GAME_HEIGHT);
         this.setVisible(true);
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -22,6 +22,25 @@ public class TankFrame extends Frame {
             }
         });
         this.addKeyListener(new MyKeyListener());
+    }
+
+    /**
+     * 消除闪烁
+     * @param g
+     */
+    Image offScreenImage=null;
+    @Override
+    public void update(Graphics g) {
+        if(offScreenImage==null){
+            offScreenImage=this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        }
+        Graphics goffScreen = offScreenImage.getGraphics();
+        Color c = goffScreen.getColor();
+        goffScreen.setColor(Color.BLACK);
+        goffScreen.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        goffScreen.setColor(c);
+        paint(goffScreen);
+        g.drawImage(offScreenImage,0,0,null);
     }
 
     @Override
@@ -43,9 +62,9 @@ public class TankFrame extends Frame {
 //                myTank.setMoving(true);
 //            }
             if (bL) myTank.setDir(Dir.LEFT);
-            if (bR) myTank.setDir(Dir.RIGHT);;
-            if (bD) myTank.setDir(Dir.DOWN);;
-            if (bU) myTank.setDir(Dir.UP);;
+            if (bR) myTank.setDir(Dir.RIGHT);
+            if (bD) myTank.setDir(Dir.DOWN);
+            if (bU) myTank.setDir(Dir.UP);
         }
 
         @Override
