@@ -8,8 +8,8 @@ import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
     private static final int GAME_WIDTH=800,GAME_HEIGHT=800;
-    Tank myTank=new Tank(200,200,Dir.DOWN,false);
-    Bullet bullet=new Bullet(300,300,Dir.DOWN);
+    Tank myTank=new Tank(200,200,Dir.DOWN,false,this);
+    Bullet bullet=null;
     public TankFrame() {
         this.setResizable(true);
         this.setTitle("tank war");
@@ -46,6 +46,7 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         myTank.paint(g);
+        if(bullet!=null)
         bullet.paint(g);
     }
 
@@ -56,20 +57,19 @@ public class TankFrame extends Frame {
         boolean bD = false;
 
         public void setMainTankDir() {
-//            if(!bL&!bU&!bR&!bD){
-//                myTank.setMoving(false);
-//            }else{
-//                myTank.setMoving(true);
-//            }
-            if (bL) myTank.setDir(Dir.LEFT);
-            if (bR) myTank.setDir(Dir.RIGHT);
-            if (bD) myTank.setDir(Dir.DOWN);
-            if (bU) myTank.setDir(Dir.UP);
+            if(!bL&!bU&!bR&!bD){
+                myTank.setMoving(false);
+            }else{
+                myTank.setMoving(true);
+                if (bL) myTank.setDir(Dir.LEFT);
+                if (bR) myTank.setDir(Dir.RIGHT);
+                if (bD) myTank.setDir(Dir.DOWN);
+                if (bU) myTank.setDir(Dir.UP);
+            }
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
-            myTank.setMoving(true);
             int keyCode = e.getKeyCode();
             switch (keyCode) {
                 case KeyEvent.VK_LEFT:
@@ -92,7 +92,6 @@ public class TankFrame extends Frame {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            myTank.setMoving(false);
             int keyCode = e.getKeyCode();
             switch (keyCode) {
                 case KeyEvent.VK_LEFT:
@@ -106,6 +105,9 @@ public class TankFrame extends Frame {
                     break;
                 case KeyEvent.VK_DOWN:
                     bD = false;
+                    break;
+                case KeyEvent.VK_CONTROL:
+                    myTank.fire();
                     break;
                 default:
                     break;
