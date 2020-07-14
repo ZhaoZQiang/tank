@@ -6,16 +6,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class TankFrame extends Frame {
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 800;
     Tank myTank = new Tank(200, 500, Dir.UP, false, this, Group.GOOD);
     List<Bullet> bullets = new ArrayList<Bullet>();
     List<Tank> tanks = new ArrayList<>();
+    Explode e=new Explode(100,200,this);
 
     public TankFrame() {
         this.setResizable(true);
@@ -67,6 +65,7 @@ public class TankFrame extends Frame {
         g.setColor(Color.RED);
         g.drawString("敌军坦克数：" + tanks.size(), 100, 50);
         g.setColor(color);
+        e.paint(g);
         //我方坦克
         myTank.paint(g);
         //敌方坦克
