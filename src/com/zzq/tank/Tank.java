@@ -15,7 +15,7 @@ public class Tank {
     private TankFrame tf;
     private boolean isLive = true;
     private Group group = Group.BAD;
-    private Random random = new Random();
+    private static Random random = new Random();
     static final int TANK_WIDTH = ResourceMgr.tankU.getWidth(), TANK_HEIGHT = ResourceMgr.tankU.getHeight();
 
     public Tank(int x, int y, Dir dir, boolean moving, TankFrame tf, Group group) {
@@ -88,9 +88,9 @@ public class Tank {
         //        g.setColor(Color.YELLOW);
         //        g.fillRect(x, y, TANK_WIDTH, TANK_HEIGHT);
         //        g.setColor(c);
-        if (!isLive&&group==Group.BAD)
+        if (!isLive && group == Group.BAD)
             tf.tanks.remove(this);
-        if(!isLive&&group==Group.GOOD)
+        if (!isLive && group == Group.GOOD)
             return;
         switch (dir) {
             case UP:
@@ -109,12 +109,20 @@ public class Tank {
                 g.drawImage(ResourceMgr.tankU, x, y, null);
                 break;
         }
+        //随机设置敌军坦克移动方向
+        if (Group.BAD == group) {
+            int r = random.nextInt(1000);
+            if (0 < r && r <= 500) dir = Dir.DOWN;
+            if (500 < r && r <= 600) dir = Dir.UP;
+            if (600 < r && r <=800) dir = Dir.RIGHT;
+            if (800 < r && r <= 1000) dir = Dir.LEFT;
+        }
         this.move();
 
     }
 
     /**
-     * 设置坦克移动方向
+     * 根据按键方向设置坦克移动方向
      */
     private void move() {
         if (!moving || !isLive)
@@ -135,6 +143,7 @@ public class Tank {
             default:
                 break;
         }
+        //随机发射子弹
         if (random.nextInt(10) > 8)
             this.fire();
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
@@ -148,8 +157,8 @@ public class Tank {
      */
     public void fire() {
         tf.bullets.add(
-            new Bullet(x + (TANK_WIDTH - Bullet.BULLET_WIDTH) / 2, y + (TANK_HEIGHT - Bullet.BULLET_HEIGHT) / 2, dir,
-                true, tf, this.group));
+                new Bullet(x + (TANK_WIDTH - Bullet.BULLET_WIDTH) / 2, y + (TANK_HEIGHT - Bullet.BULLET_HEIGHT) / 2, dir,
+                        true, tf, this.group));
     }
 
     public void die() {
