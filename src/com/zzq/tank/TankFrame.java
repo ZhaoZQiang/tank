@@ -12,10 +12,9 @@ import java.util.List;
 
 public class TankFrame extends Frame {
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 800;
-    Tank myTank = new Tank(200, 200, Dir.DOWN, false, this);
+    Tank myTank = new Tank(200, 500, Dir.UP, false, this);
     List<Bullet> bullets = new ArrayList<Bullet>();
-    Bullet bullet = null;
-
+    List<Tank> tanks=new ArrayList<>();
     public TankFrame() {
         this.setResizable(true);
         this.setTitle("tank war");
@@ -61,12 +60,17 @@ public class TankFrame extends Frame {
      */
     @Override
     public void paint(Graphics g) {
-        Color color = g.getColor();
-        g.setColor(Color.green);
-        g.drawString("子弹数量："+bullets.size(),100,100);
-        g.setColor(color);
+//        Color color = g.getColor();
+//        g.setColor(Color.green);
+//        g.drawString("子弹数量："+bullets.size(),100,100);
+//        g.setColor(color);
 
-        myTank.paint(g);
+        myTank.paint(g);//我方坦克
+        if(tanks.size()>0){//敌方坦克
+            for (int i = 0; i < tanks.size(); i++) {
+                tanks.get(i).paint(g);
+            }
+        }
         Iterator<Bullet> iterator = bullets.iterator();
         while (iterator.hasNext()){
             Bullet next = iterator.next();
