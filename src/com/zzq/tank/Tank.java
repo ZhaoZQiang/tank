@@ -131,13 +131,14 @@ public class Tank {
 
    /**
     *
-    * @Description:  移动
+    * @Description:  根据坦克运动方向移动坦克
     * @Param: @param
     * @return: void
     * @Author: bjzhaoziqiang
     * @Date: 2020/7/15 2:22
     */
     private void move() {
+        //坦克静止或者消亡不移动
         if (!moving || !isLive)
             return;
         switch (dir) {

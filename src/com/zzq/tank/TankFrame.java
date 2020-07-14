@@ -10,23 +10,30 @@ import java.util.List;
 
 public class TankFrame extends Frame {
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 800;
+    //主站坦克
     Tank myTank = new Tank(200, 500, Dir.UP, false, this, Group.GOOD);
+    //子弹
     List<Bullet> bullets = new ArrayList<Bullet>();
+    //敌军坦克
     List<Tank> tanks = new ArrayList<>();
     //    Explode e=new Explode(100,200,this);
+    //爆炸类集合
     List<Explode> explodeList = new ArrayList<>();
+
 
     public TankFrame() {
         this.setResizable(true);
         this.setTitle("tank war");
         this.setSize(GAME_WIDTH, GAME_HEIGHT);
         this.setVisible(true);
+        //重写窗口监听器
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
             }
         });
+        //重写按键监听器
         this.addKeyListener(new MyKeyListener());
     }
 
