@@ -12,7 +12,9 @@ public class Tank {
     private Dir dir;
     private boolean moving;
     private TankFrame tf;
-    private static final int TANK_WIDTH = 50, TANK_HEIGHT = 50;
+    private boolean isLive=true;
+
+    static final int TANK_WIDTH = ResourceMgr.tankU.getWidth(), TANK_HEIGHT =ResourceMgr.tankU.getHeight();
 
     public Tank(int x, int y, Dir dir, boolean moving, TankFrame tf) {
         this.x = x;
@@ -60,6 +62,14 @@ public class Tank {
 
     public void setMoving(boolean moving) {
         this.moving = moving;
+    }
+
+    public boolean isLive() {
+        return isLive;
+    }
+
+    public void setLive(boolean live) {
+        isLive = live;
     }
 
     public void paint(Graphics g) {
@@ -119,4 +129,7 @@ public class Tank {
         tf.bullets.add(new Bullet(x + (TANK_WIDTH-Bullet.BULLET_WIDTH) / 2, y +( TANK_HEIGHT-Bullet.BULLET_HEIGHT) / 2, dir, true, tf));
     }
 
+    public void die() {
+        this.isLive=false;
+    }
 }

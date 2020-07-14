@@ -6,8 +6,7 @@ import java.awt.*;
  * 子弹
  */
 public class Bullet {
-    private static final int SPEED = 10;
-    private static final int WIDTH = 10, HEIGHT = 10;
+    private static final int SPEED = 15;
     private int x, y;
     private Dir dir;
     private boolean isLive = true;
@@ -116,5 +115,18 @@ public class Bullet {
             isLive = false;
         }
 
+    }
+
+    public void collideWith(Tank tank) {
+        Rectangle bRectangle = new Rectangle(x, y, Bullet.BULLET_WIDTH, Bullet.BULLET_HEIGHT);
+        Rectangle tRectangle = new Rectangle(tank.getX(), tank.getY(), Tank.TANK_WIDTH, Tank.TANK_HEIGHT);
+        if(bRectangle.intersects(tRectangle)){
+            this.die();
+            tank.die();
+        }
+    }
+
+    private void die() {
+        this.isLive=false;
     }
 }

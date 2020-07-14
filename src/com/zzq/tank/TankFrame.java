@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TankFrame extends Frame {
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 800;
@@ -60,25 +61,45 @@ public class TankFrame extends Frame {
      */
     @Override
     public void paint(Graphics g) {
-//        Color color = g.getColor();
-//        g.setColor(Color.green);
-//        g.drawString("子弹数量："+bullets.size(),100,100);
-//        g.setColor(color);
+        Color color = g.getColor();
+        g.setColor(Color.green);
+        g.drawString("子弹数："+bullets.size(),20,50);
+        g.setColor(Color.RED);
+        g.drawString("敌军坦克数："+tanks.size(),100,50);
+        g.setColor(color);
 
         myTank.paint(g);//我方坦克
         if(tanks.size()>0){//敌方坦克
-            for (int i = 0; i < tanks.size(); i++) {
-                tanks.get(i).paint(g);
+            Iterator<Tank> it = tanks.iterator();
+            while (it.hasNext()){
+                Tank next = it.next();
+                //判断坦克是否存活
+                if(!next.isLive()){
+                    it.remove();
+                }else{
+                    next.paint(g);
+                }
             }
         }
+        //子弹
         Iterator<Bullet> iterator = bullets.iterator();
         while (iterator.hasNext()){
             Bullet next = iterator.next();
+            //判断子弹是否存活
             if (!next.isLive()) {
                 iterator.remove();
             } else {
                 next.paint(g);
             }
+        }
+        //碰撞检测
+        for (int i = 0; i <bullets.size() ; i++) {
+            Bullet bullet = bullets.get(i);
+            for (int j = 0; j <tanks.size() ; j++) {
+                Tank tank = tanks.get(j);
+                bullet.collideWith(tank);
+            }
+
         }
     }
 
