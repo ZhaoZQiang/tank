@@ -1,6 +1,7 @@
 package com.zzq.tank;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * 坦克
@@ -8,20 +9,30 @@ import java.awt.*;
 public class Tank {
     private int x;
     private int y;
-    private static int SPEED = 10;
+    private static int SPEED = 5;
     private Dir dir;
     private boolean moving;
     private TankFrame tf;
-    private boolean isLive=true;
+    private boolean isLive = true;
+    private Group group = Group.BAD;
+    private Random random = new Random();
+    static final int TANK_WIDTH = ResourceMgr.tankU.getWidth(), TANK_HEIGHT = ResourceMgr.tankU.getHeight();
 
-    static final int TANK_WIDTH = ResourceMgr.tankU.getWidth(), TANK_HEIGHT =ResourceMgr.tankU.getHeight();
-
-    public Tank(int x, int y, Dir dir, boolean moving, TankFrame tf) {
+    public Tank(int x, int y, Dir dir, boolean moving, TankFrame tf, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.moving = moving;
         this.tf = tf;
+        this.group = group;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public int getX() {
@@ -77,6 +88,10 @@ public class Tank {
         //        g.setColor(Color.YELLOW);
         //        g.fillRect(x, y, TANK_WIDTH, TANK_HEIGHT);
         //        g.setColor(c);
+        if (!isLive&&group==Group.BAD)
+            tf.tanks.remove(this);
+        if(!isLive&&group==Group.GOOD)
+            return;
         switch (dir) {
             case UP:
                 g.drawImage(ResourceMgr.tankU, x, y, null);
@@ -102,7 +117,7 @@ public class Tank {
      * 设置坦克移动方向
      */
     private void move() {
-        if (!moving)
+        if (!moving || !isLive)
             return;
         switch (dir) {
             case UP:
@@ -120,16 +135,24 @@ public class Tank {
             default:
                 break;
         }
+        if (random.nextInt(10) > 8)
+            this.fire();
+        if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
+            isLive = false;
+        }
+
     }
 
     /**
      * 射击
      */
     public void fire() {
-        tf.bullets.add(new Bullet(x + (TANK_WIDTH-Bullet.BULLET_WIDTH) / 2, y +( TANK_HEIGHT-Bullet.BULLET_HEIGHT) / 2, dir, true, tf));
+        tf.bullets.add(
+            new Bullet(x + (TANK_WIDTH - Bullet.BULLET_WIDTH) / 2, y + (TANK_HEIGHT - Bullet.BULLET_HEIGHT) / 2, dir,
+                true, tf, this.group));
     }
 
     public void die() {
-        this.isLive=false;
+        this.isLive = false;
     }
 }

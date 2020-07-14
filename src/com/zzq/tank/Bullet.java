@@ -6,20 +6,24 @@ import java.awt.*;
  * 子弹
  */
 public class Bullet {
-    private static final int SPEED = 15;
+    private static final int SPEED = 10;
     private int x, y;
     private Dir dir;
     private boolean isLive = true;
     private TankFrame tf;
+    private Group group=Group.BAD;
     public static int BULLET_WIDTH = ResourceMgr.bulletD.getWidth(), BULLET_HEIGHT = ResourceMgr.bulletD.getHeight();
 
-    public Bullet(int x, int y, Dir dir, boolean isLive, TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, boolean isLive, TankFrame tf, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.isLive = isLive;
         this.tf = tf;
+        this.group = group;
     }
+
+
 
     public int getX() {
         return x;
@@ -61,6 +65,14 @@ public class Bullet {
         this.tf = tf;
     }
 
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
     /**
      * 画出子弹
      *
@@ -71,6 +83,7 @@ public class Bullet {
         //        g.setColor(Color.RED);
         //        g.fillOval(x, y, WIDTH, HEIGHT);
         //        g.setColor(c);
+        if(!isLive) tf.bullets.remove(this);
         switch (dir) {
             case UP:
                 g.drawImage(ResourceMgr.bulletU, x, y, null);
@@ -117,7 +130,13 @@ public class Bullet {
 
     }
 
+    /***
+     * 碰撞检测
+     * @param tank
+     */
     public void collideWith(Tank tank) {
+        //
+        if(tank.getGroup()==this.getGroup()) return;
         Rectangle bRectangle = new Rectangle(x, y, Bullet.BULLET_WIDTH, Bullet.BULLET_HEIGHT);
         Rectangle tRectangle = new Rectangle(tank.getX(), tank.getY(), Tank.TANK_WIDTH, Tank.TANK_HEIGHT);
         if(bRectangle.intersects(tRectangle)){

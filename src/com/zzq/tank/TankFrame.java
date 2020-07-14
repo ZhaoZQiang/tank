@@ -13,9 +13,10 @@ import java.util.stream.Collectors;
 
 public class TankFrame extends Frame {
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 800;
-    Tank myTank = new Tank(200, 500, Dir.UP, false, this);
+    Tank myTank = new Tank(200, 500, Dir.UP, false, this, Group.GOOD);
     List<Bullet> bullets = new ArrayList<Bullet>();
-    List<Tank> tanks=new ArrayList<>();
+    List<Tank> tanks = new ArrayList<>();
+
     public TankFrame() {
         this.setResizable(true);
         this.setTitle("tank war");
@@ -52,54 +53,39 @@ public class TankFrame extends Frame {
     }
 
     /**
-     *
+     * @param g
+     * @return void
      * @Description 调用画笔
      * @author zhaoziqiang
      * @date 2020/7/13 18:28
-     * @param g
-     * @return void
      */
     @Override
     public void paint(Graphics g) {
         Color color = g.getColor();
         g.setColor(Color.green);
-        g.drawString("子弹数："+bullets.size(),20,50);
+        g.drawString("子弹数：" + bullets.size(), 20, 50);
         g.setColor(Color.RED);
-        g.drawString("敌军坦克数："+tanks.size(),100,50);
+        g.drawString("敌军坦克数：" + tanks.size(), 100, 50);
         g.setColor(color);
-
-        myTank.paint(g);//我方坦克
-        if(tanks.size()>0){//敌方坦克
-            Iterator<Tank> it = tanks.iterator();
-            while (it.hasNext()){
-                Tank next = it.next();
-                //判断坦克是否存活
-                if(!next.isLive()){
-                    it.remove();
-                }else{
-                    next.paint(g);
-                }
-            }
+        //我方坦克
+        myTank.paint(g);
+        //敌方坦克
+        for (int i = 0; i < tanks.size(); i++) {
+            tanks.get(i).paint(g);
         }
         //子弹
-        Iterator<Bullet> iterator = bullets.iterator();
-        while (iterator.hasNext()){
-            Bullet next = iterator.next();
-            //判断子弹是否存活
-            if (!next.isLive()) {
-                iterator.remove();
-            } else {
-                next.paint(g);
-            }
+        for (int i = 0; i <bullets.size() ; i++) {
+            bullets.get(i).paint(g);
         }
         //碰撞检测
-        for (int i = 0; i <bullets.size() ; i++) {
+        for (int i = 0; i < bullets.size(); i++) {
             Bullet bullet = bullets.get(i);
-            for (int j = 0; j <tanks.size() ; j++) {
+            for (int j = 0; j < tanks.size(); j++) {
                 Tank tank = tanks.get(j);
                 bullet.collideWith(tank);
             }
-
+            //检测自己
+            bullet.collideWith(myTank);
         }
     }
 
@@ -110,12 +96,11 @@ public class TankFrame extends Frame {
         boolean bD = false;
 
         /**
-         *
-         * @Description  设置坦克运动方向
-         * @author zhaoziqiang
-         * @date 2020/7/13 18:28
          * @param
          * @return void
+         * @Description 设置坦克运动方向
+         * @author zhaoziqiang
+         * @date 2020/7/13 18:28
          */
         public void setMainTankDir() {
             if (!bL & !bU & !bR & !bD) {
@@ -134,12 +119,11 @@ public class TankFrame extends Frame {
         }
 
         /**
-         *
+         * @param e
+         * @return void
          * @Description 按下按键
          * @author zhaoziqiang
          * @date 2020/7/13 18:29
-         * @param e
-         * @return void
          */
         @Override
         public void keyPressed(KeyEvent e) {
@@ -164,12 +148,11 @@ public class TankFrame extends Frame {
         }
 
         /**
-         *
+         * @param e
+         * @return void
          * @Description 释放按键
          * @author zhaoziqiang
          * @date 2020/7/13 18:29
-         * @param e
-         * @return void
          */
         @Override
         public void keyReleased(KeyEvent e) {
