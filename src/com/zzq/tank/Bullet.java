@@ -140,7 +140,11 @@ public class Bullet {
         Rectangle bRectangle = new Rectangle(x, y, Bullet.BULLET_WIDTH, Bullet.BULLET_HEIGHT);
         Rectangle tRectangle = new Rectangle(tank.getX(), tank.getY(), Tank.TANK_WIDTH, Tank.TANK_HEIGHT);
         if(bRectangle.intersects(tRectangle)){
+            //爆炸
+            tf.explodeList.add(new Explode(tank.getX(),tank.getY(),tf));
+            //子弹消失
             this.die();
+            //坦克消失
             tank.die();
         }
     }

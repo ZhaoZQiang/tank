@@ -6,7 +6,7 @@ public class Explode {
     private int x, y;
     private boolean isLive = true;
     private TankFrame tf;
-    public static int EXPLIDE_WIDTH = ResourceMgr.explodes[0].getWidth(), EXPLODE_HEIGHT =  ResourceMgr.explodes[0].getHeight();
+    public static int EXPLODE_WIDTH = ResourceMgr.explodes[0].getWidth(), EXPLODE_HEIGHT =  ResourceMgr.explodes[0].getHeight();
     private int step=0;
     public Explode(int x, int y, TankFrame tf) {
         this.x = x;
@@ -48,7 +48,7 @@ public class Explode {
 
     public void paint(Graphics g){
         g.drawImage(ResourceMgr.explodes[step++],x,y,null);
-        if(step>=16) step=0;
+        if(step>=16) tf.explodeList.remove(this);
     }
 
 }

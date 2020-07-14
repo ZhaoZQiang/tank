@@ -91,7 +91,8 @@ public class Tank {
         if (!isLive && group == Group.BAD)
             tf.tanks.remove(this);
         if (!isLive && group == Group.GOOD)
-            return;
+            tf.myTank=null;
+//            return;
         switch (dir) {
             case UP:
                 g.drawImage(ResourceMgr.tankU, x, y, null);
