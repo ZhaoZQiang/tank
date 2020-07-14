@@ -91,7 +91,7 @@ public class Tank {
         if (!isLive && group == Group.BAD)
             tf.tanks.remove(this);
         if (!isLive && group == Group.GOOD)
-            tf.myTank=null;
+            tf.myTank = null;
 //            return;
         switch (dir) {
             case UP:
@@ -115,7 +115,7 @@ public class Tank {
             int r = random.nextInt(1000);
             if (0 < r && r <= 500) dir = Dir.DOWN;
             if (500 < r && r <= 600) dir = Dir.UP;
-            if (600 < r && r <=800) dir = Dir.RIGHT;
+            if (600 < r && r <= 800) dir = Dir.RIGHT;
             if (800 < r && r <= 1000) dir = Dir.LEFT;
         }
         this.move();
@@ -144,7 +144,7 @@ public class Tank {
             default:
                 break;
         }
-        //随机发射子弹
+        //敌军塔克随机发射子弹
         if (random.nextInt(10) > 8)
             this.fire();
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {

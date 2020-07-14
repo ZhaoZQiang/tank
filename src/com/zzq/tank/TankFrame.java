@@ -178,8 +178,8 @@ public class TankFrame extends Frame {
                     bD = false;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    if(myTank!=null)
-                    myTank.fire();
+                    if (myTank != null)
+                        myTank.fire();
                     break;
                 default:
                     break;

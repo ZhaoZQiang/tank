@@ -11,7 +11,7 @@ public class Bullet {
     private Dir dir;
     private boolean isLive = true;
     private TankFrame tf;
-    private Group group=Group.BAD;
+    private Group group = Group.BAD;
     public static int BULLET_WIDTH = ResourceMgr.bulletD.getWidth(), BULLET_HEIGHT = ResourceMgr.bulletD.getHeight();
 
     public Bullet(int x, int y, Dir dir, boolean isLive, TankFrame tf, Group group) {
@@ -22,7 +22,6 @@ public class Bullet {
         this.tf = tf;
         this.group = group;
     }
-
 
 
     public int getX() {
@@ -83,7 +82,7 @@ public class Bullet {
         //        g.setColor(Color.RED);
         //        g.fillOval(x, y, WIDTH, HEIGHT);
         //        g.setColor(c);
-        if(!isLive) tf.bullets.remove(this);
+        if (!isLive) tf.bullets.remove(this);
         switch (dir) {
             case UP:
                 g.drawImage(ResourceMgr.bulletU, x, y, null);
@@ -136,12 +135,12 @@ public class Bullet {
      */
     public void collideWith(Tank tank) {
         //
-        if(tank.getGroup()==this.getGroup()) return;
+        if (tank.getGroup() == this.getGroup()) return;
         Rectangle bRectangle = new Rectangle(x, y, Bullet.BULLET_WIDTH, Bullet.BULLET_HEIGHT);
         Rectangle tRectangle = new Rectangle(tank.getX(), tank.getY(), Tank.TANK_WIDTH, Tank.TANK_HEIGHT);
-        if(bRectangle.intersects(tRectangle)){
+        if (bRectangle.intersects(tRectangle)) {
             //爆炸
-            tf.explodeList.add(new Explode(tank.getX(),tank.getY(),tf));
+            tf.explodeList.add(new Explode(tank.getX(), tank.getY(), tf));
             //子弹消失
             this.die();
             //坦克消失
@@ -150,6 +149,6 @@ public class Bullet {
     }
 
     private void die() {
-        this.isLive=false;
+        this.isLive = false;
     }
 }
