@@ -13,7 +13,8 @@ public class TankFrame extends Frame {
     Tank myTank = new Tank(200, 500, Dir.UP, false, this, Group.GOOD);
     List<Bullet> bullets = new ArrayList<Bullet>();
     List<Tank> tanks = new ArrayList<>();
-    Explode e=new Explode(100,200,this);
+    //    Explode e=new Explode(100,200,this);
+    List<Explode> explodeList = new ArrayList<>();
 
     public TankFrame() {
         this.setResizable(true);
@@ -65,15 +66,16 @@ public class TankFrame extends Frame {
         g.setColor(Color.RED);
         g.drawString("敌军坦克数：" + tanks.size(), 100, 50);
         g.setColor(color);
-        e.paint(g);
+//        e.paint(g);
         //我方坦克
-        myTank.paint(g);
+        if (myTank != null)
+            myTank.paint(g);
         //敌方坦克
         for (int i = 0; i < tanks.size(); i++) {
             tanks.get(i).paint(g);
         }
         //子弹
-        for (int i = 0; i <bullets.size() ; i++) {
+        for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
         }
         //碰撞检测
@@ -84,7 +86,12 @@ public class TankFrame extends Frame {
                 bullet.collideWith(tank);
             }
             //检测自己
-            bullet.collideWith(myTank);
+            if (myTank != null)
+                bullet.collideWith(myTank);
+        }
+        //爆炸
+        for (int i = 0; i < explodeList.size(); i++) {
+            explodeList.get(i).paint(g);
         }
     }
 
@@ -102,6 +109,7 @@ public class TankFrame extends Frame {
          * @date 2020/7/13 18:28
          */
         public void setMainTankDir() {
+            if (myTank == null) return;
             if (!bL & !bU & !bR & !bD) {
                 myTank.setMoving(false);
             } else {
@@ -170,6 +178,7 @@ public class TankFrame extends Frame {
                     bD = false;
                     break;
                 case KeyEvent.VK_CONTROL:
+                    if(myTank!=null)
                     myTank.fire();
                     break;
                 default:
