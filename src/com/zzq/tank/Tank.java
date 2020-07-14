@@ -83,6 +83,13 @@ public class Tank {
         isLive = live;
     }
 
+    /*** 
+    * @Description:  画出坦克
+    * @Param: @param g 
+    * @return: void 
+    * @Author: bjzhaoziqiang 
+    * @Date: 2020/7/15 2:17
+    */    
     public void paint(Graphics g) {
         //        Color c = g.getColor();
         //        g.setColor(Color.YELLOW);
@@ -91,8 +98,8 @@ public class Tank {
         if (!isLive && group == Group.BAD)
             tf.tanks.remove(this);
         if (!isLive && group == Group.GOOD)
+            //主战坦克被击中销毁
             tf.myTank = null;
-//            return;
         switch (dir) {
             case UP:
                 g.drawImage(ResourceMgr.tankU, x, y, null);
@@ -122,9 +129,14 @@ public class Tank {
 
     }
 
-    /**
-     * 根据按键方向设置坦克移动方向
-     */
+   /**
+    *
+    * @Description:  移动
+    * @Param: @param
+    * @return: void
+    * @Author: bjzhaoziqiang
+    * @Date: 2020/7/15 2:22
+    */
     private void move() {
         if (!moving || !isLive)
             return;
@@ -162,6 +174,14 @@ public class Tank {
                         true, tf, this.group));
     }
 
+    /**
+     *
+     * @Description: 消亡
+     * @Param: @param
+     * @return: void
+     * @Author: bjzhaoziqiang
+     * @Date: 2020/7/15 2:22
+     */
     public void die() {
         this.isLive = false;
     }

@@ -95,6 +95,9 @@ public class TankFrame extends Frame {
         }
     }
 
+    /**
+     * 按键监听类
+     */
     class MyKeyListener extends KeyAdapter {
         boolean bL = false;
         boolean bR = false;
