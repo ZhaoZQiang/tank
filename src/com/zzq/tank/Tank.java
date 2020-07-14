@@ -8,11 +8,11 @@ import java.awt.*;
 public class Tank {
     private int x;
     private int y;
-    private static  int SPEED = 10;
+    private static int SPEED = 10;
     private Dir dir;
     private boolean moving;
     private TankFrame tf;
-    private static final int TANK_WIDTH=50,TANK_HEIGHT=50;
+    private static final int TANK_WIDTH = 50, TANK_HEIGHT = 50;
 
     public Tank(int x, int y, Dir dir, boolean moving, TankFrame tf) {
         this.x = x;
@@ -62,11 +62,28 @@ public class Tank {
         this.moving = moving;
     }
 
-    public void paint(Graphics g){
-        Color c = g.getColor();
-        g.setColor(Color.YELLOW);
-        g.fillRect(x, y, TANK_WIDTH, TANK_HEIGHT);
-        g.setColor(c);
+    public void paint(Graphics g) {
+        //        Color c = g.getColor();
+        //        g.setColor(Color.YELLOW);
+        //        g.fillRect(x, y, TANK_WIDTH, TANK_HEIGHT);
+        //        g.setColor(c);
+        switch (dir) {
+            case UP:
+                g.drawImage(ResourceMgr.tankU, x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.tankR, x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.tankD, x, y, null);
+                break;
+            case LEFT:
+                g.drawImage(ResourceMgr.tankL, x, y, null);
+                break;
+            default:
+                g.drawImage(ResourceMgr.tankU, x, y, null);
+                break;
+        }
         this.move();
 
     }
@@ -74,8 +91,9 @@ public class Tank {
     /**
      * 设置坦克移动方向
      */
-    private void  move(){
-        if(!moving) return;
+    private void move() {
+        if (!moving)
+            return;
         switch (dir) {
             case UP:
                 y -= SPEED;
@@ -97,8 +115,8 @@ public class Tank {
     /**
      * 射击
      */
-    public void fire(){
-       tf.bullets.add(new Bullet(x+TANK_WIDTH/2,y+TANK_HEIGHT/2,dir,true,tf));
+    public void fire() {
+        tf.bullets.add(new Bullet(x + (TANK_WIDTH-Bullet.BULLET_WIDTH) / 2, y +( TANK_HEIGHT-Bullet.BULLET_HEIGHT) / 2, dir, true, tf));
     }
 
 }

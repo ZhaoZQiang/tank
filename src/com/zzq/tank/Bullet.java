@@ -6,12 +6,13 @@ import java.awt.*;
  * 子弹
  */
 public class Bullet {
-    private static final int SPEED=10;
-    private static final   int WIDTH=10,HEIGHT=10;
-    private int x,y;
+    private static final int SPEED = 10;
+    private static final int WIDTH = 10, HEIGHT = 10;
+    private int x, y;
     private Dir dir;
-    private boolean isLive=true;
+    private boolean isLive = true;
     private TankFrame tf;
+    public static int BULLET_WIDTH = ResourceMgr.bulletD.getWidth(), BULLET_HEIGHT = ResourceMgr.bulletD.getHeight();
 
     public Bullet(int x, int y, Dir dir, boolean isLive, TankFrame tf) {
         this.x = x;
@@ -63,20 +64,38 @@ public class Bullet {
 
     /**
      * 画出子弹
+     *
      * @param g
      */
-    public void paint(Graphics g){
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x, y, WIDTH, HEIGHT);
-        g.setColor(c);
+    public void paint(Graphics g) {
+        //        Color c = g.getColor();
+        //        g.setColor(Color.RED);
+        //        g.fillOval(x, y, WIDTH, HEIGHT);
+        //        g.setColor(c);
+        switch (dir) {
+            case UP:
+                g.drawImage(ResourceMgr.bulletU, x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.bulletR, x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.bulletD, x, y, null);
+                break;
+            case LEFT:
+                g.drawImage(ResourceMgr.bulletL, x, y, null);
+                break;
+            default:
+                g.drawImage(ResourceMgr.bulletU, x, y, null);
+                break;
+        }
         this.move();
     }
 
     /**
      * 设置子弹移动
      */
-    private void  move(){
+    private void move() {
         switch (dir) {
             case UP:
                 y -= SPEED;
@@ -93,8 +112,8 @@ public class Bullet {
             default:
                 break;
         }
-        if(x<0||y<0||x>TankFrame.GAME_WIDTH||y>TankFrame.GAME_HEIGHT){
-            isLive=false;
+        if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
+            isLive = false;
         }
 
     }
