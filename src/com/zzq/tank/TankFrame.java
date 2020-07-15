@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TankFrame extends Frame {
-    static final int GAME_WIDTH = 800, GAME_HEIGHT = 800;
+    static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;
     //主站坦克
     Tank myTank = new Tank(200, 500, Dir.UP, false, this, Group.GOOD);
     //子弹
@@ -132,6 +132,8 @@ public class TankFrame extends Frame {
                     myTank.setDir(Dir.DOWN);
                 if (bU)
                     myTank.setDir(Dir.UP);
+                //添加坦克运动声效
+                new Thread(()->new Audio("audio/tank_move.wav").play()).start();
             }
         }
 

@@ -136,18 +136,24 @@ public class Bullet {
     public void collideWith(Tank tank) {
         //
         if (tank.getGroup() == this.getGroup()) return;
+        //子弹矩形
         Rectangle bRectangle = new Rectangle(x, y, Bullet.BULLET_WIDTH, Bullet.BULLET_HEIGHT);
+        //坦克矩形
         Rectangle tRectangle = new Rectangle(tank.getX(), tank.getY(), Tank.TANK_WIDTH, Tank.TANK_HEIGHT);
+        //判断两个矩形相交
         if (bRectangle.intersects(tRectangle)) {
-            //爆炸
+            //增加坦克爆炸效果
             tf.explodeList.add(new Explode(tank.getX(), tank.getY(), tf));
-            //子弹消失
+            //子弹消亡
             this.die();
-            //坦克消失
+            //坦克消亡
             tank.die();
         }
     }
 
+    /**
+     * 子弹消亡
+     */
     private void die() {
         this.isLive = false;
     }

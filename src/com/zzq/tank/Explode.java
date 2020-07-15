@@ -13,6 +13,8 @@ public class Explode {
         this.x = x;
         this.y = y;
         this.tf = tf;
+        //添加爆炸声效
+        new Thread(()->new Audio("audio/explode.wav").play()).start();
     }
 
     public int getX() {

@@ -173,6 +173,7 @@ public class Tank {
         tf.bullets.add(
                 new Bullet(x + (TANK_WIDTH - Bullet.BULLET_WIDTH) / 2, y + (TANK_HEIGHT - Bullet.BULLET_HEIGHT) / 2, dir,
                         true, tf, this.group));
+        if(Group.GOOD==this.group) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
     }
 
     /**
