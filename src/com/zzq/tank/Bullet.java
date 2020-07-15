@@ -6,7 +6,7 @@ import java.awt.*;
  * 子弹
  */
 public class Bullet {
-    private static final int SPEED = 10;
+    private static final int SPEED = 7;
     private int x, y;
     private Dir dir;
     private boolean isLive = true;

@@ -15,8 +15,9 @@ public class Tank {
     private TankFrame tf;
     private boolean isLive = true;
     private Group group = Group.BAD;
+
     private static Random random = new Random();
-    static final int TANK_WIDTH = ResourceMgr.tankU.getWidth(), TANK_HEIGHT = ResourceMgr.tankU.getHeight();
+    static final int TANK_WIDTH = ResourceMgr.goodTankU.getWidth(), TANK_HEIGHT = ResourceMgr.goodTankU.getHeight();
 
     public Tank(int x, int y, Dir dir, boolean moving, TankFrame tf, Group group) {
         this.x = x;
@@ -84,12 +85,12 @@ public class Tank {
     }
 
     /*** 
-    * @Description:  画出坦克
-    * @Param: @param g 
-    * @return: void 
-    * @Author: bjzhaoziqiang 
-    * @Date: 2020/7/15 2:17
-    */    
+     * @Description: 画出坦克
+     * @Param: @param g
+     * @return: void
+     * @Author: bjzhaoziqiang
+     * @Date: 2020/7/15 2:17
+     */
     public void paint(Graphics g) {
         //        Color c = g.getColor();
         //        g.setColor(Color.YELLOW);
@@ -102,45 +103,45 @@ public class Tank {
             tf.myTank = null;
         switch (dir) {
             case UP:
-                g.drawImage(ResourceMgr.tankU, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.tankR, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.tankD, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
                 break;
             case LEFT:
-                g.drawImage(ResourceMgr.tankL, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
                 break;
             default:
-                g.drawImage(ResourceMgr.tankU, x, y, null);
+                //
                 break;
         }
         //随机设置敌军坦克移动方向
-        if (Group.BAD == group) {
-            int r = random.nextInt(1000);
-            if (0 < r && r <= 500) dir = Dir.DOWN;
-            if (500 < r && r <= 600) dir = Dir.UP;
-            if (600 < r && r <= 800) dir = Dir.RIGHT;
-            if (800 < r && r <= 1000) dir = Dir.LEFT;
+        if (Group.BAD == group && random.nextInt(100) > 95) {
+            randomDir();
+
         }
         this.move();
-
     }
 
-   /**
-    *
-    * @Description:  根据坦克运动方向移动坦克
-    * @Param: @param
-    * @return: void
-    * @Author: bjzhaoziqiang
-    * @Date: 2020/7/15 2:22
-    */
+    private void randomDir() {
+        dir = Dir.values()[random.nextInt(4)];
+    }
+
+    /**
+     * @Description: 根据坦克运动方向移动坦克
+     * @Param: @param
+     * @return: void
+     * @Author: bjzhaoziqiang
+     * @Date: 2020/7/15 2:22
+     */
     private void move() {
         //坦克静止或者消亡不移动
         if (!moving || !isLive)
             return;
+        //根据dir设置移动位置
         switch (dir) {
             case UP:
                 y -= SPEED;
@@ -158,12 +159,10 @@ public class Tank {
                 break;
         }
         //敌军塔克随机发射子弹
-        if (random.nextInt(10) > 8)
+        if (this.group == Group.BAD && random.nextInt(100) > 95)
             this.fire();
-        if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
-            isLive = false;
-        }
-
+        //坦克运动边界检测
+        boundsCheck();
     }
 
     /**
@@ -171,13 +170,13 @@ public class Tank {
      */
     public void fire() {
         tf.bullets.add(
-                new Bullet(x + (TANK_WIDTH - Bullet.BULLET_WIDTH) / 2, y + (TANK_HEIGHT - Bullet.BULLET_HEIGHT) / 2, dir,
-                        true, tf, this.group));
-        if(Group.GOOD==this.group) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
+            new Bullet(x + (TANK_WIDTH - Bullet.BULLET_WIDTH) / 2, y + (TANK_HEIGHT - Bullet.BULLET_HEIGHT) / 2, dir,
+                true, tf, this.group));
+        if (Group.GOOD == this.group)
+            new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
     }
 
     /**
-     *
      * @Description: 消亡
      * @Param: @param
      * @return: void
@@ -186,5 +185,23 @@ public class Tank {
      */
     public void die() {
         this.isLive = false;
+    }
+
+    /**
+     * @param []
+     * @return void
+     * @Description 边界检测
+     * @author zhaoziqiang
+     * @date 2020/7/15 17:39
+     */
+    public void boundsCheck() {
+        if (x < 0)
+            x = 0;
+        if (x > TankFrame.GAME_WIDTH - Tank.TANK_WIDTH)
+            x = TankFrame.GAME_WIDTH - Tank.TANK_WIDTH;
+        if (y < 30)
+            y = 30;
+        if (y > TankFrame.GAME_HEIGHT - Tank.TANK_HEIGHT)
+            y = TankFrame.GAME_HEIGHT - Tank.TANK_HEIGHT;
     }
 }
