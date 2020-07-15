@@ -1,5 +1,7 @@
 package test;
 
+import com.zzq.tank.ImageUtil;
+import com.zzq.tank.ResourceMgr;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -21,5 +23,17 @@ public class ImageTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void rotateImageTest(){
+        try {
+            BufferedImage tankU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/GoodTank1.png"));
+            BufferedImage tankL = ImageUtil.rotateImage(tankU, -90);
+            Assertions.assertNotNull(tankL);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
