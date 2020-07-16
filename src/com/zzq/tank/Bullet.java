@@ -6,7 +6,7 @@ import java.awt.*;
  * 子弹
  */
 public class Bullet {
-    private static final int SPEED = 7;
+    private static final int SPEED = PropertyMgr.getInt("bulletSpeed");
     private int x, y;
     private Dir dir;
     private boolean isLive = true;

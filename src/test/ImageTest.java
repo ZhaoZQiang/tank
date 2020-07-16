@@ -1,6 +1,7 @@
 package test;
 
 import com.zzq.tank.ImageUtil;
+import com.zzq.tank.PropertyMgr;
 import com.zzq.tank.ResourceMgr;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Properties;
 
 /**
  * @author zhaoziqiang
@@ -16,7 +18,7 @@ import java.io.IOException;
  */
 public class ImageTest {
     @Test
-    public void test(){
+    public void test() {
         try {
             BufferedImage read = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/tankU.gif"));
             Assertions.assertNotNull(read);
@@ -26,9 +28,10 @@ public class ImageTest {
     }
 
     @Test
-    public void rotateImageTest(){
+    public void rotateImageTest() {
         try {
-            BufferedImage tankU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/GoodTank1.png"));
+            BufferedImage tankU =
+                ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/GoodTank1.png"));
             BufferedImage tankL = ImageUtil.rotateImage(tankU, -90);
             Assertions.assertNotNull(tankL);
         } catch (IOException e) {
@@ -36,4 +39,17 @@ public class ImageTest {
         }
 
     }
+
+    @Test
+    public void loadConfig() {
+        Properties properties = new Properties();
+
+        try {
+            properties.load(PropertyMgr.class.getClassLoader().getResourceAsStream("config"));
+            Assertions.assertNotNull(properties);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

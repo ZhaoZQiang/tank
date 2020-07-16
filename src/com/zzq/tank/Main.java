@@ -1,7 +1,7 @@
 package com.zzq.tank;
 
 public class Main {
-    static final int TANK_SIZE = 5;
+    static final int TANK_SIZE = PropertyMgr.getInt("initialTankCount");
 
     public static void main(String[] args) throws InterruptedException {
         TankFrame tf = new TankFrame();

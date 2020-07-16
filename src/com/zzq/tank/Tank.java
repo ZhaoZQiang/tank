@@ -9,7 +9,7 @@ import java.util.Random;
 public class Tank {
     private int x;
     private int y;
-    private static int SPEED = 5;
+    private static int SPEED =  PropertyMgr.getInt("tankSpeed");
     private Dir dir;
     private boolean moving;
     private TankFrame tf;
