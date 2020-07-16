@@ -73,7 +73,7 @@ public class TankFrame extends Frame {
         g.setColor(Color.RED);
         g.drawString("敌军坦克数：" + tanks.size(), 100, 50);
         g.setColor(color);
-//        e.paint(g);
+
         //我方坦克
         if (myTank != null)
             myTank.paint(g);

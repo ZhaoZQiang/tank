@@ -15,6 +15,7 @@ public class Tank {
     private TankFrame tf;
     private boolean isLive = true;
     private Group group = Group.BAD;
+    private Rectangle rectangle=new Rectangle();
 
     private static Random random = new Random();
     static final int TANK_WIDTH = ResourceMgr.goodTankU.getWidth(), TANK_HEIGHT = ResourceMgr.goodTankU.getHeight();
@@ -26,6 +27,10 @@ public class Tank {
         this.moving = moving;
         this.tf = tf;
         this.group = group;
+        rectangle.x = x;
+        rectangle.y = y;
+        rectangle.width = TANK_WIDTH;
+        rectangle.height = TANK_HEIGHT;
     }
 
     public Group getGroup() {
@@ -84,7 +89,15 @@ public class Tank {
         isLive = live;
     }
 
-    /*** 
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
+    }
+
+    /***
      * @Description: 画出坦克
      * @Param: @param g
      * @return: void
@@ -158,6 +171,9 @@ public class Tank {
             default:
                 break;
         }
+        //update rectangle
+        rectangle.x = x;
+        rectangle.y = y;
         //敌军塔克随机发射子弹
         if (this.group == Group.BAD && random.nextInt(100) > 95)
             this.fire();
@@ -188,7 +204,7 @@ public class Tank {
     }
 
     /**
-     * @param []
+     * @param
      * @return void
      * @Description 边界检测
      * @author zhaoziqiang

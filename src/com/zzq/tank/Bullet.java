@@ -12,6 +12,8 @@ public class Bullet {
     private boolean isLive = true;
     private TankFrame tf;
     private Group group = Group.BAD;
+    private Rectangle rectangle=new Rectangle();
+
     public static int BULLET_WIDTH = ResourceMgr.bulletD.getWidth(), BULLET_HEIGHT = ResourceMgr.bulletD.getHeight();
 
     public Bullet(int x, int y, Dir dir, boolean isLive, TankFrame tf, Group group) {
@@ -21,6 +23,10 @@ public class Bullet {
         this.isLive = isLive;
         this.tf = tf;
         this.group = group;
+        rectangle.x=x;
+        rectangle.y=y;
+        rectangle.width=BULLET_WIDTH;
+        rectangle.height=BULLET_HEIGHT;
     }
 
 
@@ -123,6 +129,9 @@ public class Bullet {
             default:
                 break;
         }
+        //update rectangle
+        rectangle.x = x;
+        rectangle.y = y;
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
             isLive = false;
         }
@@ -136,12 +145,9 @@ public class Bullet {
     public void collideWith(Tank tank) {
         //
         if (tank.getGroup() == this.getGroup()) return;
-        //子弹矩形
-        Rectangle bRectangle = new Rectangle(x, y, Bullet.BULLET_WIDTH, Bullet.BULLET_HEIGHT);
-        //坦克矩形
-        Rectangle tRectangle = new Rectangle(tank.getX(), tank.getY(), Tank.TANK_WIDTH, Tank.TANK_HEIGHT);
+
         //判断两个矩形相交
-        if (bRectangle.intersects(tRectangle)) {
+        if (this.rectangle.intersects(tank.getRectangle())) {
             //增加坦克爆炸效果
             tf.explodeList.add(new Explode(tank.getX(), tank.getY(), tf));
             //子弹消亡
