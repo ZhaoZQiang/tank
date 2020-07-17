@@ -15,6 +15,16 @@ public class ResourceMgr {
     public static BufferedImage bulletU, bulletR, bulletD, bulletL;
     public static BufferedImage[] explodes = new BufferedImage[16];
 
+    private ResourceMgr(){}
+    //静态内部类
+    public static class ResourceMgrHolder{
+        private static final ResourceMgr  resourceMgr=new ResourceMgr();
+    }
+
+    public static ResourceMgr getResourceMgr(){
+        return ResourceMgrHolder.resourceMgr;
+    }
+
     static {
         try {
             //主战坦克
