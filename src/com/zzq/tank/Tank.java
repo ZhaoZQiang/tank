@@ -1,6 +1,7 @@
 package com.zzq.tank;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 /**
@@ -9,13 +10,13 @@ import java.util.Random;
 public class Tank {
     private int x;
     private int y;
-    private static int SPEED =  PropertyMgr.getInt("tankSpeed");
+    private static int SPEED = PropertyMgr.getInt("tankSpeed");
     private Dir dir;
     private boolean moving;
     private TankFrame tf;
     private boolean isLive = true;
     private Group group = Group.BAD;
-    private Rectangle rectangle=new Rectangle();
+    private Rectangle rectangle = new Rectangle();
     private FireStrategy fireStrategy;
 
     private static Random random = new Random();
@@ -33,8 +34,15 @@ public class Tank {
         rectangle.width = TANK_WIDTH;
         rectangle.height = TANK_HEIGHT;
         //敌我不同开火策略
-        if(this.group==Group.GOOD) fireStrategy=new FireStrategy2();
-        else fireStrategy=FireStrategy1.getInstance();
+//        if(this.group==Group.GOOD) fireStrategy=new FireStrategy2();
+        //反射获取主站策略对象
+        if (this.group == Group.GOOD) {
+            try {
+                fireStrategy = (FireStrategy) Class.forName(PropertyMgr.getStr("goodFs")).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else fireStrategy = FireStrategy1.getInstance();
     }
 
     public Group getGroup() {

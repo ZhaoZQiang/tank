@@ -4,3 +4,7 @@ tankSpeed=5
 bulletSpeed=10
 gameWidth=1080
 gameHeight=720
+
+#FireStrategy
+goodFs=com.zzq.tank.FireStrategy2
+badFs=com.zzq.tank.FireStrategy1
