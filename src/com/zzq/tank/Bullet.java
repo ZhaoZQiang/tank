@@ -27,6 +27,8 @@ public class Bullet {
         rectangle.y=y;
         rectangle.width=BULLET_WIDTH;
         rectangle.height=BULLET_HEIGHT;
+        //子弹添加到集合
+        tf.bullets.add(this);
     }
 
 

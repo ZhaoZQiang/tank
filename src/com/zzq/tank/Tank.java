@@ -16,6 +16,7 @@ public class Tank {
     private boolean isLive = true;
     private Group group = Group.BAD;
     private Rectangle rectangle=new Rectangle();
+    private FireStrategy fireStrategy;
 
     private static Random random = new Random();
     static final int TANK_WIDTH = ResourceMgr.goodTankU.getWidth(), TANK_HEIGHT = ResourceMgr.goodTankU.getHeight();
@@ -31,6 +32,9 @@ public class Tank {
         rectangle.y = y;
         rectangle.width = TANK_WIDTH;
         rectangle.height = TANK_HEIGHT;
+        //敌我不同开火策略
+        if(this.group==Group.GOOD) fireStrategy=new FireStrategy2();
+        else fireStrategy=FireStrategy1.getInstance();
     }
 
     public Group getGroup() {
@@ -95,6 +99,14 @@ public class Tank {
 
     public void setRectangle(Rectangle rectangle) {
         this.rectangle = rectangle;
+    }
+
+    public TankFrame getTf() {
+        return tf;
+    }
+
+    public void setTf(TankFrame tf) {
+        this.tf = tf;
     }
 
     /***
@@ -185,11 +197,12 @@ public class Tank {
      * 射击
      */
     public void fire() {
-        tf.bullets.add(
-            new Bullet(x + (TANK_WIDTH - Bullet.BULLET_WIDTH) / 2, y + (TANK_HEIGHT - Bullet.BULLET_HEIGHT) / 2, dir,
-                true, tf, this.group));
-        if (Group.GOOD == this.group)
-            new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
+//        tf.bullets.add(
+//            new Bullet(x + (TANK_WIDTH - Bullet.BULLET_WIDTH) / 2, y + (TANK_HEIGHT - Bullet.BULLET_HEIGHT) / 2, dir,
+//                true, tf, this.group));
+//        if (Group.GOOD == this.group)
+//            new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
+        fireStrategy.fire(this);
     }
 
     /**
