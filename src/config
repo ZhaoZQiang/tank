@@ -6,5 +6,5 @@ gameWidth=1080
 gameHeight=720
 
 #FireStrategy
-goodFs=com.zzq.tank.FireStrategy2
-badFs=com.zzq.tank.FireStrategy1
+goodFs=com.zzq.tank.FourDirFireStrategy
+badFs=com.zzq.tank.DefaultFireStrategy

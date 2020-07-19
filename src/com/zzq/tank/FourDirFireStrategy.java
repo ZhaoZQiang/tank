@@ -5,7 +5,7 @@ package com.zzq.tank;
  * @author: bjzhaoziqiang
  * @time: 2020/7/18 11:45
  */
-public class FireStrategy2 implements FireStrategy<Tank> {
+public class FourDirFireStrategy implements FireStrategy<Tank> {
     @Override
     public void fire(Tank a) {
         Dir[] dirs = Dir.values();

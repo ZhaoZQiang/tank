@@ -1,7 +1,6 @@
 package com.zzq.tank;
 
 import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 /**
@@ -42,7 +41,7 @@ public class Tank {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else fireStrategy = FireStrategy1.getInstance();
+        } else fireStrategy = DefaultFireStrategy.getInstance();
     }
 
     public Group getGroup() {

@@ -5,15 +5,15 @@ package com.zzq.tank;
  * @author: bjzhaoziqiang
  * @time: 2020/7/18 11:45
  */
-public class FireStrategy1 implements FireStrategy<Tank> {
+public class DefaultFireStrategy implements FireStrategy<Tank> {
 
-    private FireStrategy1(){}
+    private DefaultFireStrategy(){}
 
     private static class FireStrategy1Holder{
-        private static final FireStrategy1 instacnce= new FireStrategy1();
+        private static final DefaultFireStrategy instacnce= new DefaultFireStrategy();
     }
 
-    public static FireStrategy1 getInstance(){
+    public static DefaultFireStrategy getInstance(){
         return FireStrategy1Holder.instacnce;
     }
 
