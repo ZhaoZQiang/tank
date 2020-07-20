@@ -1,14 +1,15 @@
-package com.zzq.tank;
+package com.zzq.tank.factory;
 
-import com.zzq.tank.factory.BaseBullet;
-import com.zzq.tank.factory.BaseTank;
+import com.zzq.tank.*;
 
 import java.awt.*;
 
 /**
- * 子弹
+ * @author zhaoziqiang
+ * @Description:
+ * @date 2020/7/20 11:20
  */
-public class Bullet extends BaseBullet {
+public class RectBullet extends BaseBullet {
     private static final int SPEED = PropertyMgr.getInt("bulletSpeed");
     private int x, y;
     private Dir dir;
@@ -19,7 +20,7 @@ public class Bullet extends BaseBullet {
 
     public static int BULLET_WIDTH = ResourceMgr.bulletD.getWidth(), BULLET_HEIGHT = ResourceMgr.bulletD.getHeight();
 
-    public Bullet(int x, int y, Dir dir, boolean isLive, TankFrame tf, Group group) {
+    public RectBullet(int x, int y, Dir dir, boolean isLive, TankFrame tf, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -95,23 +96,10 @@ public class Bullet extends BaseBullet {
         //        g.fillOval(x, y, WIDTH, HEIGHT);
         //        g.setColor(c);
         if (!isLive) tf.bullets.remove(this);
-        switch (dir) {
-            case UP:
-                g.drawImage(ResourceMgr.bulletU, x, y, null);
-                break;
-            case RIGHT:
-                g.drawImage(ResourceMgr.bulletR, x, y, null);
-                break;
-            case DOWN:
-                g.drawImage(ResourceMgr.bulletD, x, y, null);
-                break;
-            case LEFT:
-                g.drawImage(ResourceMgr.bulletL, x, y, null);
-                break;
-            default:
-                g.drawImage(ResourceMgr.bulletU, x, y, null);
-                break;
-        }
+        Color color = g.getColor();
+        g.setColor(this.group==Group.GOOD?Color.MAGENTA:Color.WHITE);
+        g.fillRect(x,y,15,15);
+        g.setColor(color);
         this.move();
     }
 
@@ -156,8 +144,8 @@ public class Bullet extends BaseBullet {
         //判断两个矩形相交
         if (this.rectangle.intersects(tank.getRectangle())) {
             //增加坦克爆炸效果
-//            tf.explodeList.add(new Explode(tank.getX(), tank.getY(), tf));
-            tf.explodeList.add(TankFrame.gef.createExplode(tank.getX(), tank.getY(), tf));
+            //            tf.explodeList.add(new Explode(tank.getX(), tank.getY(), tf));
+            tf.explodeList.add(tf.gef.createExplode(tank.getX(), tank.getY(), tf));
             //子弹消亡
             this.die();
             //坦克消亡
@@ -171,4 +159,6 @@ public class Bullet extends BaseBullet {
     private void die() {
         this.isLive = false;
     }
+
+
 }

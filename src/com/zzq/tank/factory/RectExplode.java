@@ -1,17 +1,23 @@
-package com.zzq.tank;
+package com.zzq.tank.factory;
 
-import com.zzq.tank.factory.BaseExplode;
+
+import com.zzq.tank.Audio;
+import com.zzq.tank.TankFrame;
 
 import java.awt.*;
 
-public class Explode extends BaseExplode {
+/**
+ * @author zhaoziqiang
+ * @Description:
+ * @date 2020/7/20 11:20
+ */
+public class RectExplode extends  BaseExplode {
     private int x, y;
     private boolean isLive = true;
     private TankFrame tf;
-    public static int EXPLODE_WIDTH = ResourceMgr.explodes[0].getWidth(), EXPLODE_HEIGHT = ResourceMgr.explodes[0].getHeight();
     private int step = 0;
 
-    public Explode(int x, int y, TankFrame tf) {
+    public RectExplode(int x, int y, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.tf = tf;
@@ -53,8 +59,11 @@ public class Explode extends BaseExplode {
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(ResourceMgr.explodes[step++], x, y, null);
-        if (step >= 16) tf.explodeList.remove(this);
+        Color color = g.getColor();
+        g.setColor(Color.green);
+        g.fillRect(this.getX(),this.getY(),this.step++*5,this.step++*5);
+        if (this.step >= 10) getTf().explodeList.remove(this);
+        g.setColor(color);
     }
 
 }

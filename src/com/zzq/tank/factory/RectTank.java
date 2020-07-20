@@ -1,14 +1,16 @@
-package com.zzq.tank;
+package com.zzq.tank.factory;
 
-import com.zzq.tank.factory.BaseTank;
+import com.zzq.tank.*;
 
 import java.awt.*;
 import java.util.Random;
 
 /**
- * 坦克
+ * @author zhaoziqiang
+ * @Description: 方形坦克
+ * @date 2020/7/20 11:21
  */
-public class Tank extends BaseTank {
+public class RectTank extends  BaseTank {
     private int x;
     private int y;
     private static int SPEED = PropertyMgr.getInt("tankSpeed");
@@ -23,7 +25,7 @@ public class Tank extends BaseTank {
     private static Random random = new Random();
     static final int TANK_WIDTH = ResourceMgr.goodTankU.getWidth(), TANK_HEIGHT = ResourceMgr.goodTankU.getHeight();
 
-    public Tank(int x, int y, Dir dir, boolean moving, TankFrame tf, Group group) {
+    public RectTank(int x, int y, Dir dir, boolean moving, TankFrame tf, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -35,7 +37,7 @@ public class Tank extends BaseTank {
         rectangle.width = TANK_WIDTH;
         rectangle.height = TANK_HEIGHT;
         //敌我不同开火策略
-//        if(this.group==Group.GOOD) fireStrategy=new FireStrategy2();
+        //        if(this.group==Group.GOOD) fireStrategy=new FireStrategy2();
         //反射获取主站策略对象
         if (this.group == Group.GOOD) {
             try {
@@ -78,7 +80,7 @@ public class Tank extends BaseTank {
     }
 
     public static void setSPEED(int SPEED) {
-        Tank.SPEED = SPEED;
+        RectTank.SPEED = SPEED;
     }
 
     public Dir getDir() {
@@ -134,32 +136,16 @@ public class Tank extends BaseTank {
      */
     @Override
     public void paint(Graphics g) {
-        //        Color c = g.getColor();
-        //        g.setColor(Color.YELLOW);
-        //        g.fillRect(x, y, TANK_WIDTH, TANK_HEIGHT);
-        //        g.setColor(c);
+        Color c = g.getColor();
+        g.setColor(this.group==Group.GOOD?Color.YELLOW:Color.blue);
+        g.fillRect(x, y, TANK_WIDTH, TANK_HEIGHT);
+        g.setColor(c);
         if (!isLive && group == Group.BAD)
             tf.tanks.remove(this);
         if (!isLive && group == Group.GOOD)
             //主战坦克被击中销毁
             tf.myTank = null;
-        switch (dir) {
-            case UP:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
-                break;
-            case RIGHT:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
-                break;
-            case DOWN:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
-                break;
-            case LEFT:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
-                break;
-            default:
-                //
-                break;
-        }
+
         //随机设置敌军坦克移动方向
         if (Group.BAD == group && random.nextInt(100) > 95) {
             randomDir();
@@ -215,11 +201,11 @@ public class Tank extends BaseTank {
      */
     @Override
     public void fire() {
-//        tf.bullets.add(
-//            new Bullet(x + (TANK_WIDTH - Bullet.BULLET_WIDTH) / 2, y + (TANK_HEIGHT - Bullet.BULLET_HEIGHT) / 2, dir,
-//                true, tf, this.group));
-//        if (Group.GOOD == this.group)
-//            new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
+        //        tf.bullets.add(
+        //            new Bullet(x + (TANK_WIDTH - Bullet.BULLET_WIDTH) / 2, y + (TANK_HEIGHT - Bullet.BULLET_HEIGHT) / 2, dir,
+        //                true, tf, this.group));
+        //        if (Group.GOOD == this.group)
+        //            new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
         fireStrategy.fire(this);
     }
 
@@ -245,11 +231,12 @@ public class Tank extends BaseTank {
     public void boundsCheck() {
         if (x < 0)
             x = 0;
-        if (x > TankFrame.GAME_WIDTH - Tank.TANK_WIDTH)
-            x = TankFrame.GAME_WIDTH - Tank.TANK_WIDTH;
+        if (x > TankFrame.GAME_WIDTH - RectTank.TANK_WIDTH)
+            x = TankFrame.GAME_WIDTH - RectTank.TANK_WIDTH;
         if (y < 30)
             y = 30;
-        if (y > TankFrame.GAME_HEIGHT - Tank.TANK_HEIGHT)
-            y = TankFrame.GAME_HEIGHT - Tank.TANK_HEIGHT;
+        if (y > TankFrame.GAME_HEIGHT - RectTank.TANK_HEIGHT)
+            y = TankFrame.GAME_HEIGHT - RectTank.TANK_HEIGHT;
     }
+
 }

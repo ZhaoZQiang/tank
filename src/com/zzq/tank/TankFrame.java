@@ -1,24 +1,29 @@
 package com.zzq.tank;
 
+import com.zzq.tank.factory.*;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TankFrame extends Frame {
-    static final int GAME_WIDTH = PropertyMgr.getInt("gameWidth"), GAME_HEIGHT = PropertyMgr.getInt("gameHeight");
+    public  static final int GAME_WIDTH = PropertyMgr.getInt("gameWidth"), GAME_HEIGHT = PropertyMgr.getInt("gameHeight");
+    public static GameElementFactory gef=new DefaultElementFactory();
     //主站坦克
-    Tank myTank = new Tank(200, 500, Dir.UP, false, this, Group.GOOD);
+//    public Tank myTank = new Tank(200, 500, Dir.UP, false, this, Group.GOOD);
+    public BaseTank myTank = gef.createTank(200, 500, Dir.UP, true, this, Group.GOOD);
     //子弹
-    List<Bullet> bullets = new ArrayList<Bullet>();
+    public List<BaseBullet> bullets = new ArrayList<>();
     //敌军坦克
-    List<Tank> tanks = new ArrayList<>();
+    public List<BaseTank> tanks = new ArrayList<>();
     //    Explode e=new Explode(100,200,this);
     //爆炸类集合
-    List<Explode> explodeList = new ArrayList<>();
+   public List<BaseExplode> explodeList = new ArrayList<>();
 
 
     public TankFrame() {
@@ -69,9 +74,6 @@ public class TankFrame extends Frame {
     public void paint(Graphics g) {
         Color color = g.getColor();
         g.setColor(Color.green);
-        g.drawOval(100,300,100,100);
-        g.setColor(Color.red);
-        g.drawRoundRect(100,200,100,100,50,50);
         g.drawString("子弹数：" + bullets.size(), 20, 50);
         g.setColor(Color.RED);
         g.drawString("敌军坦克数：" + tanks.size(), 100, 50);
@@ -90,9 +92,9 @@ public class TankFrame extends Frame {
         }
         //碰撞检测
         for (int i = 0; i < bullets.size(); i++) {
-            Bullet bullet = bullets.get(i);
+            BaseBullet bullet = bullets.get(i);
             for (int j = 0; j < tanks.size(); j++) {
-                Tank tank = tanks.get(j);
+                BaseTank tank = tanks.get(j);
                 bullet.collideWith(tank);
             }
             //检测自己

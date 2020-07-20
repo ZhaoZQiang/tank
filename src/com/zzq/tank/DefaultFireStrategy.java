@@ -1,11 +1,13 @@
 package com.zzq.tank;
 
+import com.zzq.tank.factory.BaseTank;
+
 /**
  * @description: 默认发射一颗子弹(单例模式)
  * @author: bjzhaoziqiang
  * @time: 2020/7/18 11:45
  */
-public class DefaultFireStrategy implements FireStrategy<Tank> {
+public class DefaultFireStrategy implements FireStrategy<BaseTank> {
 
     private DefaultFireStrategy(){}
 
@@ -18,9 +20,10 @@ public class DefaultFireStrategy implements FireStrategy<Tank> {
     }
 
     @Override
-    public void fire(Tank a) {
-        new Bullet(a.getX() + (Tank.TANK_WIDTH - Bullet.BULLET_WIDTH) / 2, a.getY() + (Tank.TANK_HEIGHT - Bullet.BULLET_HEIGHT) / 2, a.getDir(),
-                true, a.getTf(), a.getGroup());
+    public void fire(BaseTank a) {
+//        new Bullet(a.getX() + (Tank.TANK_WIDTH - Bullet.BULLET_WIDTH) / 2, a.getY() + (Tank.TANK_HEIGHT - Bullet.BULLET_HEIGHT) / 2, a.getDir(),
+//                true, a.getTf(), a.getGroup());
+        TankFrame.gef.createBullet(a.getX() + (Tank.TANK_WIDTH - Bullet.BULLET_WIDTH) / 2, a.getY() + (Tank.TANK_HEIGHT - Bullet.BULLET_HEIGHT) / 2, a.getDir(), true, a.getTf(), a.getGroup());
         if (Group.GOOD == a.getGroup())
             new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
     }
