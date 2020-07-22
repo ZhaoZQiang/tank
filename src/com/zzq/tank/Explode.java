@@ -5,14 +5,14 @@ import java.awt.*;
 public class Explode {
     private int x, y;
     private boolean isLive = true;
-    private TankFrame tf;
+    private GameModel gm;
     public static int EXPLODE_WIDTH = ResourceMgr.explodes[0].getWidth(), EXPLODE_HEIGHT = ResourceMgr.explodes[0].getHeight();
     private int step = 0;
 
-    public Explode(int x, int y, TankFrame tf) {
+    public Explode(int x, int y, GameModel gm) {
         this.x = x;
         this.y = y;
-        this.tf = tf;
+        this.gm = gm;
         //添加爆炸声效
         new Thread(()->new Audio("audio/explode.wav").play()).start();
     }
@@ -41,17 +41,17 @@ public class Explode {
         isLive = live;
     }
 
-    public TankFrame getTf() {
-        return tf;
+    public GameModel getGm() {
+        return gm;
     }
 
-    public void setTf(TankFrame tf) {
-        this.tf = tf;
+    public void setGm(GameModel gm) {
+        this.gm = gm;
     }
 
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++], x, y, null);
-        if (step >= 16) tf.explodeList.remove(this);
+        if (step >= 16) gm.explodeList.remove(this);
     }
 
 }

@@ -10,25 +10,25 @@ public class Bullet {
     private int x, y;
     private Dir dir;
     private boolean isLive = true;
-    private TankFrame tf;
+    private GameModel gm;
     private Group group = Group.BAD;
     private Rectangle rectangle=new Rectangle();
 
     public static int BULLET_WIDTH = ResourceMgr.bulletD.getWidth(), BULLET_HEIGHT = ResourceMgr.bulletD.getHeight();
 
-    public Bullet(int x, int y, Dir dir, boolean isLive, TankFrame tf, Group group) {
+    public Bullet(int x, int y, Dir dir, boolean isLive, GameModel gm, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.isLive = isLive;
-        this.tf = tf;
+        this.gm = gm;
         this.group = group;
         rectangle.x=x;
         rectangle.y=y;
         rectangle.width=BULLET_WIDTH;
         rectangle.height=BULLET_HEIGHT;
         //子弹添加到集合
-        tf.bullets.add(this);
+        gm.bullets.add(this);
     }
 
 
@@ -64,12 +64,12 @@ public class Bullet {
         isLive = live;
     }
 
-    public TankFrame getTf() {
-        return tf;
+    public GameModel getGm() {
+        return gm;
     }
 
-    public void setTf(TankFrame tf) {
-        this.tf = tf;
+    public void setGm(GameModel gm) {
+        this.gm = gm;
     }
 
     public Group getGroup() {
@@ -90,7 +90,7 @@ public class Bullet {
         //        g.setColor(Color.RED);
         //        g.fillOval(x, y, WIDTH, HEIGHT);
         //        g.setColor(c);
-        if (!isLive) tf.bullets.remove(this);
+        if (!isLive) gm.bullets.remove(this);
         switch (dir) {
             case UP:
                 g.drawImage(ResourceMgr.bulletU, x, y, null);
@@ -151,7 +151,7 @@ public class Bullet {
         //判断两个矩形相交
         if (this.rectangle.intersects(tank.getRectangle())) {
             //增加坦克爆炸效果
-            tf.explodeList.add(new Explode(tank.getX(), tank.getY(), tf));
+            gm.explodeList.add(new Explode(tank.getX(), tank.getY(), gm));
             //子弹消亡
             this.die();
             //坦克消亡

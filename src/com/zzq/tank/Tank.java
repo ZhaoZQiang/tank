@@ -12,7 +12,7 @@ public class Tank {
     private static int SPEED = PropertyMgr.getInt("tankSpeed");
     private Dir dir;
     private boolean moving;
-    private TankFrame tf;
+    private GameModel gm;
     private boolean isLive = true;
     private Group group = Group.BAD;
     private Rectangle rectangle = new Rectangle();
@@ -21,12 +21,12 @@ public class Tank {
     private static Random random = new Random();
     static final int TANK_WIDTH = ResourceMgr.goodTankU.getWidth(), TANK_HEIGHT = ResourceMgr.goodTankU.getHeight();
 
-    public Tank(int x, int y, Dir dir, boolean moving, TankFrame tf, Group group) {
+    public Tank(int x, int y, Dir dir, boolean moving, GameModel gm, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.moving = moving;
-        this.tf = tf;
+        this.gm = gm;
         this.group = group;
         rectangle.x = x;
         rectangle.y = y;
@@ -108,12 +108,12 @@ public class Tank {
         this.rectangle = rectangle;
     }
 
-    public TankFrame getTf() {
-        return tf;
+    public GameModel getGm() {
+        return gm;
     }
 
-    public void setTf(TankFrame tf) {
-        this.tf = tf;
+    public void setGm(GameModel gm) {
+        this.gm = gm;
     }
 
     /***
@@ -129,10 +129,10 @@ public class Tank {
         //        g.fillRect(x, y, TANK_WIDTH, TANK_HEIGHT);
         //        g.setColor(c);
         if (!isLive && group == Group.BAD)
-            tf.tanks.remove(this);
+            gm.tanks.remove(this);
         if (!isLive && group == Group.GOOD)
             //主战坦克被击中销毁
-            tf.myTank = null;
+            gm.myTank = null;
         switch (dir) {
             case UP:
                 g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
