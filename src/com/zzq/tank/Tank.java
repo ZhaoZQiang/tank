@@ -6,16 +6,17 @@ import java.util.Random;
 /**
  * 坦克
  */
-public class Tank {
+public class Tank extends GameObject{
     private int x;
     private int y;
+    private int oldx,oldy;
     private static int SPEED = PropertyMgr.getInt("tankSpeed");
     private Dir dir;
     private boolean moving;
     private GameModel gm;
     private boolean isLive = true;
     private Group group = Group.BAD;
-    private Rectangle rectangle = new Rectangle();
+    public Rectangle rectangle = new Rectangle();
     private FireStrategy fireStrategy;
 
     private static Random random = new Random();
@@ -116,6 +117,23 @@ public class Tank {
         this.gm = gm;
     }
 
+
+    public int getOldx() {
+        return oldx;
+    }
+
+    public void setOldx(int oldx) {
+        this.oldx = oldx;
+    }
+
+    public int getOldy() {
+        return oldy;
+    }
+
+    public void setOldy(int oldy) {
+        this.oldy = oldy;
+    }
+
     /***
      * @Description: 画出坦克
      * @Param: @param g
@@ -129,7 +147,7 @@ public class Tank {
         //        g.fillRect(x, y, TANK_WIDTH, TANK_HEIGHT);
         //        g.setColor(c);
         if (!isLive && group == Group.BAD)
-            gm.tanks.remove(this);
+            gm.objects.remove(this);
         if (!isLive && group == Group.GOOD)
             //主战坦克被击中销毁
             gm.myTank = null;
@@ -170,6 +188,8 @@ public class Tank {
      * @Date: 2020/7/15 2:22
      */
     private void move() {
+        this.oldx=x;
+        this.oldy=y;
         //坦克静止或者消亡不移动
         if (!moving || !isLive)
             return;
@@ -239,5 +259,10 @@ public class Tank {
             y = 30;
         if (y > TankFrame.GAME_HEIGHT - Tank.TANK_HEIGHT)
             y = TankFrame.GAME_HEIGHT - Tank.TANK_HEIGHT;
+    }
+
+    public void back(){
+        this.setX(oldx);
+        this.setY(oldy);
     }
 }

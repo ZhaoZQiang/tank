@@ -8,3 +8,8 @@ gameHeight=720
 #FireStrategy
 goodFs=com.zzq.tank.FourDirFireStrategy
 badFs=com.zzq.tank.DefaultFireStrategy
+#colliders
+colliders=com.zzq.cor.BtCollider,com.zzq.cor.TtCollider,com.zzq.cor.WbCollider,com.zzq.cor.WtCollider
+#wall
+wallWidth=100
+wallHeight=50

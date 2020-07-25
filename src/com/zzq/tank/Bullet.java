@@ -5,14 +5,14 @@ import java.awt.*;
 /**
  * 子弹
  */
-public class Bullet {
+public class Bullet extends GameObject{
     private static final int SPEED = PropertyMgr.getInt("bulletSpeed");
     private int x, y;
     private Dir dir;
     private boolean isLive = true;
     private GameModel gm;
     private Group group = Group.BAD;
-    private Rectangle rectangle=new Rectangle();
+    public Rectangle rectangle=new Rectangle();
 
     public static int BULLET_WIDTH = ResourceMgr.bulletD.getWidth(), BULLET_HEIGHT = ResourceMgr.bulletD.getHeight();
 
@@ -28,7 +28,7 @@ public class Bullet {
         rectangle.width=BULLET_WIDTH;
         rectangle.height=BULLET_HEIGHT;
         //子弹添加到集合
-        gm.bullets.add(this);
+        gm.objects.add(this);
     }
 
 
@@ -90,7 +90,7 @@ public class Bullet {
         //        g.setColor(Color.RED);
         //        g.fillOval(x, y, WIDTH, HEIGHT);
         //        g.setColor(c);
-        if (!isLive) gm.bullets.remove(this);
+        if (!isLive) gm.objects.remove(this);
         switch (dir) {
             case UP:
                 g.drawImage(ResourceMgr.bulletU, x, y, null);
@@ -140,29 +140,10 @@ public class Bullet {
 
     }
 
-    /***
-     * 碰撞检测
-     * @param tank
-     */
-    public void collideWith(Tank tank) {
-        //
-        if (tank.getGroup() == this.getGroup()) return;
-
-        //判断两个矩形相交
-        if (this.rectangle.intersects(tank.getRectangle())) {
-            //增加坦克爆炸效果
-            gm.explodeList.add(new Explode(tank.getX(), tank.getY(), gm));
-            //子弹消亡
-            this.die();
-            //坦克消亡
-            tank.die();
-        }
-    }
-
     /**
      * 子弹消亡
      */
-    private void die() {
+    public void die() {
         this.isLive = false;
     }
 }

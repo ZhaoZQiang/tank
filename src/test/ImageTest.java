@@ -1,5 +1,6 @@
 package test;
 
+import com.zzq.tank.FireStrategy;
 import com.zzq.tank.ImageUtil;
 import com.zzq.tank.PropertyMgr;
 import com.zzq.tank.ResourceMgr;
@@ -42,14 +43,18 @@ public class ImageTest {
 
     @Test
     public void loadConfig() {
-        Properties properties = new Properties();
+//        Properties properties = new Properties();
+//
+//        try {
+//            properties.load(PropertyMgr.class.getClassLoader().getResourceAsStream("config"));
+//            Assertions.assertNotNull(properties);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        String colliders = PropertyMgr.getStr("colliders");
+        System.out.println("colliders======"+colliders);
 
-        try {
-            properties.load(PropertyMgr.class.getClassLoader().getResourceAsStream("config"));
-            Assertions.assertNotNull(properties);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
 }

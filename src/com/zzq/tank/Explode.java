@@ -2,7 +2,7 @@ package com.zzq.tank;
 
 import java.awt.*;
 
-public class Explode {
+public class Explode extends GameObject{
     private int x, y;
     private boolean isLive = true;
     private GameModel gm;
@@ -51,7 +51,7 @@ public class Explode {
 
     public void paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++], x, y, null);
-        if (step >= 16) gm.explodeList.remove(this);
+        if (step >= 16) gm.objects.remove(this);
     }
 
 }
