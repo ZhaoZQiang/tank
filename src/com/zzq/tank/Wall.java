@@ -10,8 +10,6 @@ import java.awt.*;
  */
 public class Wall extends GameObject {
     public  Rectangle rectangle;
-    private int x, y;
-    private int width,height;
 
 
     public Wall( int x, int y, int width, int height) {
@@ -26,7 +24,7 @@ public class Wall extends GameObject {
 
 
     @Override
-    void paint(Graphics g) {
+    public void paint(Graphics g) {
         Color c = g.getColor();
         g.setColor(Color.GRAY);
         g.fillRect(x, y, width, height);

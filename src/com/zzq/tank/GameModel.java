@@ -35,10 +35,10 @@ public class GameModel {
             new Tank(10 + i * 80, 30, Dir.DOWN, true, Group.BAD);
         }
         //初始化墙
-        new Wall(100, 300, 100, 50);
-        new Wall(500, 300, 100, 50);
-        new Wall(300, 600, 50, 100);
-        new Wall(600, 200, 100, 50);
+//        new Wall(100, 300, 100, 50);
+//        new Wall(500, 300, 100, 50);
+//        new Wall(300, 600, 50, 100);
+//        new Wall(600, 200, 100, 50);
 
     }
 
@@ -77,7 +77,7 @@ public class GameModel {
             objects.get(i).paint(g);
         }
 
-        //碰撞检测-策略模式+责任链
+        //碰撞检测-调停者模式+责任链
         for (int i = 0; i < objects.size(); i++) {
             GameObject o1 = objects.get(i);
             for (int j = i + 1; j < objects.size(); j++) {

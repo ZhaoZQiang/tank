@@ -3,7 +3,6 @@ package com.zzq.cor;
 import com.zzq.tank.GameObject;
 import com.zzq.tank.PropertyMgr;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 

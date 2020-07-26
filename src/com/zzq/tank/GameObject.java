@@ -8,6 +8,10 @@ import java.awt.*;
  * @time: 2020/7/25 13:23
  */
 public abstract class GameObject {
-    private  int x,y;
-    abstract void paint(Graphics g);
+    public int x;
+    public int y;
+    public int width;
+    public int height;
+    public abstract void paint(Graphics g);
+
 }

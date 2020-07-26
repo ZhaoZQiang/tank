@@ -7,8 +7,6 @@ import java.util.Random;
  * 坦克
  */
 public class Tank extends GameObject{
-    private int x;
-    private int y;
     private int oldx,oldy;
     private static int SPEED = PropertyMgr.getInt("tankSpeed");
     private Dir dir;
@@ -27,6 +25,8 @@ public class Tank extends GameObject{
         this.dir = dir;
         this.moving = moving;
         this.group = group;
+        this.width=TANK_WIDTH;
+        this.height=TANK_HEIGHT;
         rectangle.x = x;
         rectangle.y = y;
         rectangle.width = TANK_WIDTH;
@@ -85,9 +85,6 @@ public class Tank extends GameObject{
     public void setMoving(boolean moving) {
         this.moving = moving;
     }
-
-
-
 
 
     /***

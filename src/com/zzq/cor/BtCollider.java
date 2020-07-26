@@ -13,7 +13,7 @@ public class BtCollider implements Collider {
         if (o1 instanceof Bullet && o2 instanceof Tank) {
             Bullet b = (Bullet) o1;
             Tank t = (Tank) o2;
-            if (b.getGroup() == t.getGroup()) return true;
+            if (b.getGroup() == t.getGroup() || t.getGroup()==Group.GOOD) return true;
             //判断两个矩形相交
             if (b.rectangle.intersects(t.rectangle)) {
                 //增加坦克爆炸效果

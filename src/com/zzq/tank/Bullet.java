@@ -7,7 +7,6 @@ import java.awt.*;
  */
 public class Bullet extends GameObject{
     private static final int SPEED = PropertyMgr.getInt("bulletSpeed");
-    private int x, y;
     private Dir dir;
     private boolean isLive = true;
     private Group group = Group.BAD;
@@ -21,6 +20,8 @@ public class Bullet extends GameObject{
         this.dir = dir;
         this.isLive = isLive;
         this.group = group;
+        this.width=BULLET_WIDTH;
+        this.height=BULLET_HEIGHT;
         rectangle.x=x;
         rectangle.y=y;
         rectangle.width=BULLET_WIDTH;
@@ -36,6 +37,7 @@ public class Bullet extends GameObject{
     public void setGroup(Group group) {
         this.group = group;
     }
+
 
     /**
      * 画出子弹
