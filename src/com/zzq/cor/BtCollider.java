@@ -1,9 +1,6 @@
 package com.zzq.cor;
 
-import com.zzq.tank.Bullet;
-import com.zzq.tank.Explode;
-import com.zzq.tank.GameObject;
-import com.zzq.tank.Tank;
+import com.zzq.tank.*;
 
 /**
  * @description: 子弹坦克碰撞
@@ -20,7 +17,7 @@ public class BtCollider implements Collider {
             //判断两个矩形相交
             if (b.rectangle.intersects(t.rectangle)) {
                 //增加坦克爆炸效果
-                t.getGm().add(new Explode(t.getX(), t.getY(), t.getGm()));
+                new Explode(t.getX(), t.getY());
                 //子弹消亡
                 b.die();
                 //坦克消亡

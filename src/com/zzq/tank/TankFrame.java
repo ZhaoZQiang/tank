@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TankFrame extends Frame {
     static final int GAME_WIDTH = PropertyMgr.getInt("gameWidth"), GAME_HEIGHT = PropertyMgr.getInt("gameHeight");
-    GameModel gm=new GameModel();
+    GameModel gm = GameModel.getInstance();
 
     public TankFrame() {
         this.setResizable(true);
@@ -93,7 +93,7 @@ public class TankFrame extends Frame {
                 if (bU)
                     myTank.setDir(Dir.UP);
                 //添加坦克运动声效
-                new Thread(()->new Audio("audio/tank_move.wav").play()).start();
+                new Thread(() -> new Audio("audio/tank_move.wav").play()).start();
             }
         }
 

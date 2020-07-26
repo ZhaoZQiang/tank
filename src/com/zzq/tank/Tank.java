@@ -13,7 +13,6 @@ public class Tank extends GameObject{
     private static int SPEED = PropertyMgr.getInt("tankSpeed");
     private Dir dir;
     private boolean moving;
-    private GameModel gm;
     private boolean isLive = true;
     private Group group = Group.BAD;
     public Rectangle rectangle = new Rectangle();
@@ -22,12 +21,11 @@ public class Tank extends GameObject{
     private static Random random = new Random();
     static final int TANK_WIDTH = ResourceMgr.goodTankU.getWidth(), TANK_HEIGHT = ResourceMgr.goodTankU.getHeight();
 
-    public Tank(int x, int y, Dir dir, boolean moving, GameModel gm, Group group) {
+    public Tank(int x, int y, Dir dir, boolean moving, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.moving = moving;
-        this.gm = gm;
         this.group = group;
         rectangle.x = x;
         rectangle.y = y;
@@ -43,6 +41,8 @@ public class Tank extends GameObject{
                 e.printStackTrace();
             }
         } else fireStrategy = DefaultFireStrategy.getInstance();
+
+        GameModel.getInstance().objects.add(this);
     }
 
     public Group getGroup() {
@@ -69,13 +69,6 @@ public class Tank extends GameObject{
         this.y = y;
     }
 
-    public static int getSPEED() {
-        return SPEED;
-    }
-
-    public static void setSPEED(int SPEED) {
-        Tank.SPEED = SPEED;
-    }
 
     public Dir getDir() {
         return dir;
@@ -93,46 +86,9 @@ public class Tank extends GameObject{
         this.moving = moving;
     }
 
-    public boolean isLive() {
-        return isLive;
-    }
-
-    public void setLive(boolean live) {
-        isLive = live;
-    }
-
-    public Rectangle getRectangle() {
-        return rectangle;
-    }
-
-    public void setRectangle(Rectangle rectangle) {
-        this.rectangle = rectangle;
-    }
-
-    public GameModel getGm() {
-        return gm;
-    }
-
-    public void setGm(GameModel gm) {
-        this.gm = gm;
-    }
 
 
-    public int getOldx() {
-        return oldx;
-    }
 
-    public void setOldx(int oldx) {
-        this.oldx = oldx;
-    }
-
-    public int getOldy() {
-        return oldy;
-    }
-
-    public void setOldy(int oldy) {
-        this.oldy = oldy;
-    }
 
     /***
      * @Description: 画出坦克
@@ -145,7 +101,7 @@ public class Tank extends GameObject{
         //        Color c = g.getColor();
         //        g.setColor(Color.YELLOW);
         //        g.fillRect(x, y, TANK_WIDTH, TANK_HEIGHT);
-        //        g.setColor(c);
+        GameModel gm = GameModel.getInstance();
         if (!isLive && group == Group.BAD)
             gm.objects.remove(this);
         if (!isLive && group == Group.GOOD)

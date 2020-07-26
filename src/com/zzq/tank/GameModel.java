@@ -16,27 +16,40 @@ import java.util.List;
  */
 public class GameModel {
     public static final int TANK_SIZE = PropertyMgr.getInt("initialTankCount");
+
+    private static final GameModel INSTANCE = new GameModel();
+    static {
+        INSTANCE.init();
+    }
+    public static GameModel getInstance() {
+        return INSTANCE;
+    }
     //主站坦克
-    Tank myTank = new Tank(200, 500, Dir.UP, false, this, Group.GOOD);
+    Tank myTank;
     List<GameObject> objects = new ArrayList<>();
     ColliderChain chain = new ColliderChain();
+    private void init() {
+        myTank=new Tank(200, 500, Dir.UP, false, Group.GOOD);
+        //初始化敌方坦克
+        for (int i = 0; i < TANK_SIZE; i++) {
+            new Tank(10 + i * 80, 30, Dir.DOWN, true, Group.BAD);
+        }
+        //初始化墙
+        new Wall(100, 300, 100, 50);
+        new Wall(500, 300, 100, 50);
+        new Wall(300, 600, 50, 100);
+        new Wall(600, 200, 100, 50);
+
+    }
 
     public Tank getMyTank() {
         return myTank;
     }
 
-    public GameModel() {
-        //初始化敌方坦克
-        for (int i = 0; i < TANK_SIZE; i++) {
-            objects.add(new Tank(10 + i * 80, 30, Dir.DOWN, true, this, Group.BAD));
-        }
-        //初始化墙
-        objects.add(new Wall(100,300,100,50 ));
-        objects.add(new Wall(500,300,100,50 ));
-        objects.add(new Wall(300,600,50,100 ));
-        objects.add(new Wall(600,200,100,50 ));
+    private GameModel() {
 
     }
+
 
     public void add(GameObject o) {
         objects.add(o);

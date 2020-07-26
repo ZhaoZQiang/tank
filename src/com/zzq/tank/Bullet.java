@@ -10,66 +10,23 @@ public class Bullet extends GameObject{
     private int x, y;
     private Dir dir;
     private boolean isLive = true;
-    private GameModel gm;
     private Group group = Group.BAD;
     public Rectangle rectangle=new Rectangle();
 
     public static int BULLET_WIDTH = ResourceMgr.bulletD.getWidth(), BULLET_HEIGHT = ResourceMgr.bulletD.getHeight();
 
-    public Bullet(int x, int y, Dir dir, boolean isLive, GameModel gm, Group group) {
+    public Bullet(int x, int y, Dir dir, boolean isLive, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.isLive = isLive;
-        this.gm = gm;
         this.group = group;
         rectangle.x=x;
         rectangle.y=y;
         rectangle.width=BULLET_WIDTH;
         rectangle.height=BULLET_HEIGHT;
         //子弹添加到集合
-        gm.objects.add(this);
-    }
-
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public Dir getDir() {
-        return dir;
-    }
-
-    public void setDir(Dir dir) {
-        this.dir = dir;
-    }
-
-    public boolean isLive() {
-        return isLive;
-    }
-
-    public void setLive(boolean live) {
-        isLive = live;
-    }
-
-    public GameModel getGm() {
-        return gm;
-    }
-
-    public void setGm(GameModel gm) {
-        this.gm = gm;
+        GameModel.getInstance().objects.add(this);
     }
 
     public Group getGroup() {
@@ -90,6 +47,7 @@ public class Bullet extends GameObject{
         //        g.setColor(Color.RED);
         //        g.fillOval(x, y, WIDTH, HEIGHT);
         //        g.setColor(c);
+        GameModel gm = GameModel.getInstance();
         if (!isLive) gm.objects.remove(this);
         switch (dir) {
             case UP:
