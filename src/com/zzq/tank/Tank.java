@@ -1,6 +1,8 @@
 package com.zzq.tank;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -217,5 +219,12 @@ public class Tank extends GameObject{
     public void back(){
         this.setX(oldx);
         this.setY(oldy);
+    }
+
+    private List<FireObservers> list= Arrays.asList(new FireObserver1());
+
+    public void handleFire() {
+        FireEvent fireEvent = new FireEvent(this);
+        list.forEach(x->x.fire(fireEvent));
     }
 }

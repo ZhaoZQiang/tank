@@ -151,9 +151,11 @@ public class TankFrame extends Frame {
                     bD = false;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    if (myTank != null)
-                        myTank.fire();
+                    if (gm.myTank != null)
+//                        gm.myTank.fire();
+                        gm.myTank.handleFire();//应用观察者模式
                     break;
+
                 default:
                     break;
             }
