@@ -155,6 +155,12 @@ public class TankFrame extends Frame {
 //                        gm.myTank.fire();
                         gm.myTank.handleFire();//应用观察者模式
                     break;
+                case KeyEvent.VK_S:
+                    gm.save();
+                    break;
+                case KeyEvent.VK_L:
+                    gm.load();
+                    break;
 
                 default:
                     break;

@@ -1,11 +1,9 @@
 package com.zzq.tank;
 
-import com.zzq.cor.BtCollider;
-import com.zzq.cor.Collider;
 import com.zzq.cor.ColliderChain;
-import com.zzq.cor.TtCollider;
 
 import java.awt.*;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +12,7 @@ import java.util.List;
  * @Description: Facade （门面模式）
  * @date 2020/7/22 17:52
  */
-public class GameModel {
+public class GameModel implements Serializable {
     public static final int TANK_SIZE = PropertyMgr.getInt("initialTankCount");
 
     private static final GameModel INSTANCE = new GameModel();
@@ -86,5 +84,57 @@ public class GameModel {
             }
         }
 
+    }
+
+    /***
+     *
+     * @Description: 存盘
+     * @return void 
+     * @Author: bjzhaoziqiang 
+     * @Date: 2020/8/23 15:39
+     */ 
+    public void save() {
+        File file = new File("d:/tank/tank.data");
+        ObjectOutputStream os=null;
+        try {
+           os = new ObjectOutputStream(new FileOutputStream(file));
+            os.writeObject(myTank);
+            os.writeObject(objects);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                os.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    /***
+     *
+     * @Description:  加载
+     *
+     * @return void
+     * @Author: bjzhaoziqiang
+     * @Date: 2020/8/23 15:42
+     */
+    public void load() {
+        File file = new File("d:/tank/tank.data");
+        ObjectInputStream ois=null;
+        try {
+            ois = new ObjectInputStream(new FileInputStream(file));
+            myTank= (Tank) ois.readObject();
+            objects= (List) ois.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                ois.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
